@@ -1,0 +1,227 @@
+<div class="lds-ring spin-center" *ngIf="isLoading">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="main-div" *ngIf="!isLoading">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-header *ngIf="mode == 'add'"
+      ><h2>Adding a New Issue</h2></mat-card-header
+    >
+    <mat-card-header *ngIf="mode == 'edit'"
+      ><h2>Updating Issue</h2></mat-card-header
+    >
+    <mat-card-content>
+      <form #addIssueForm="ngForm" (ngSubmit)="onSubmit(addIssueForm.value)">
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            name="description"
+            ngModel
+            type="text"
+            [(ngModel)]="issue.description"
+            #descriptionInput="ngModel"
+            placeholder="Description"
+            required
+            minlength="5"
+          ></textarea>
+        </mat-form-field>
+        <div
+          *ngIf="
+            descriptionInput.invalid &&
+            (descriptionInput.dirty || descriptionInput.touched)
+          "
+        >
+          <div *ngIf="descriptionInput.errors?.required">
+            <mat-error>Issue description is required!</mat-error>
+          </div>
+          <div *ngIf="descriptionInput.errors?.minlength">
+            <mat-error
+              >Issue description must be at least 5 characters long!</mat-error
+            >
+          </div>
+        </div>
+        <mat-form-field class="decrease-width" appearance="outline">
+          <mat-label>Severity</mat-label>
+          <mat-select
+            name="severity"
+            [(ngModel)]="issue.severity"
+            ngModel
+            #severityInput="ngModel"
+            required
+          >
+            <mat-option *ngFor="let severity of severities" [value]="severity">
+              {{ severity }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div
+          *ngIf="
+            severityInput.invalid &&
+            (severityInput.dirty || severityInput.touched)
+          "
+        >
+          <mat-error>Please select an issue severity!</mat-error>
+        </div>
+        <br />
+        <mat-form-field class="decrease-width" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select
+            name="status"
+            disableOptionCentering
+            panelClass="myPanelClass"
+            [(ngModel)]="issue.status"
+            ngModel
+            #statusInput="ngModel"
+            required
+          >
+            <mat-option *ngFor="let status of statuses" [value]="status">{{
+              status
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div
+          *ngIf="
+            statusInput.invalid && (statusInput.dirty || statusInput.touched)
+          "
+        >
+          <mat-error>Please select an issue status!</mat-error>
+        </div>
+        <br />
+        <mat-form-field class="decrease-width" appearance="outline">
+          <mat-label>Created Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            name="createdDate"
+            [(ngModel)]="issue.createdDate"
+            ngModel
+            #createdDateInput="ngModel"
+            [max]="resolvedDateInput.value"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div
+          *ngIf="
+            createdDateInput.invalid &&
+            (createdDateInput.dirty || createdDateInput.touched) &&
+            createdDateInput.errors?.required
+          "
+        >
+          <mat-error>Issue created date is required!</mat-error>
+        </div>
+        <div *ngIf="createdDateInput.hasError('matDatepickerParse')">
+          <mat-error>
+            "{{ createdDateInput.getError("matDatepickerParse").text }}" is not
+            a valid date!
+          </mat-error>
+        </div>
+        <div *ngIf="createdDateInput.hasError('matDatepickerMax')">
+          <mat-error>
+            Maximum date should be
+            {{ resolvedDateInput.value | date: "mediumDate" }}</mat-error
+          >
+        </div>
+        <br />
+        <mat-form-field class="decrease-width" appearance="outline">
+          <mat-label>Resolved Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            name="resolvedDate"
+            [(ngModel)]="issue.resolvedDate"
+            ngModel
+            #resolvedDateInput="ngModel"
+            [min]="createdDateInput.value"
+            [max]="date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <div
+          *ngIf="
+            mode == 'add' && resolvedDateInput.hasError('matDatepickerParse')
+          "
+        >
+          <mat-error>
+            "{{ resolvedDateInput.getError("matDatepickerParse").text }}" is not
+            a valid date!
+          </mat-error>
+        </div>
+        <div *ngIf="resolvedDateInput.hasError('matDatepickerMin')">
+          <mat-error>
+            Minimum date should be
+            {{ createdDateInput.value | date: "mediumDate" }}</mat-error
+          >
+        </div>
+        <div *ngIf="resolvedDateInput.hasError('matDatepickerMax')">
+          <mat-error>Resolved date cannot be in the future!</mat-error>
+        </div>
+        <div
+          *ngIf="
+            (resolvedDateInput.dirty || resolvedDateInput.touched) &&
+            resolvedDateInput.value != null &&
+            (statusInput.value === 'Open' ||
+              statusInput.value === 'In Progress')
+          "
+        >
+          <mat-error>
+            Issue can't be resolved while status is
+            {{ statusInput.value }}!
+          </mat-error>
+        </div>
+        <div
+          *ngIf="
+            resolvedDateInput.dirty &&
+            resolvedDateInput.value === null &&
+            statusInput.value === 'Closed'
+          "
+        >
+          <mat-error>
+            Issue resolved date is required for
+            {{ statusInput.value }} status!
+          </mat-error>
+        </div>
+        <br />
+        <button
+          *ngIf="mode == 'add'"
+          mat-raised-button
+          type="submit"
+          [disabled]="
+            addIssueForm.invalid ||
+            (resolvedDateInput.dirty &&
+              resolvedDateInput.value != null &&
+              (statusInput.value === 'Open' ||
+                statusInput.value === 'In Progress')) ||
+            (statusInput.value === 'Closed' && !resolvedDateInput.value)
+          "
+        >
+          Add Issue
+        </button>
+        <button
+          *ngIf="mode == 'edit'"
+          mat-raised-button
+          type="submit"
+          [disabled]="
+            addIssueForm.invalid ||
+            (resolvedDateInput.value != null &&
+              (statusInput.value === 'Open' ||
+                statusInput.value === 'In Progress'))
+          "
+        >
+          Update Issue
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

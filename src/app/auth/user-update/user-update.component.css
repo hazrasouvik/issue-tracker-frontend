@@ -1,0 +1,104 @@
+.main-div {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+}
+
+.mat-card {
+  width: 60%;
+}
+
+.mat-card-header {
+  display: flex;
+  justify-content: left;
+}
+
+.sub-title {
+  font: bolder;
+  font-size: x-large;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-form-field.user-name {
+  width: 49%;
+}
+
+.mat-form-field.first-name {
+  margin-right: 5px;
+}
+
+.mat-form-field.second-name {
+  margin-left: 12px;
+}
+
+.first-name-error {
+  width: 49%;
+}
+
+.second-name-error {
+  width: 49%;
+  margin-left: 463px;
+}
+
+.mat-form-field.location-field {
+  width: 50%;
+}
+
+button.mat-raised-button {
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+  font-size: 17px;
+}
+
+.mat-error {
+  background-color: rgba(224, 74, 88, 255);
+  color: white;
+  font-size: 20px;
+  height: 20px;
+  text-align: left;
+  margin: auto;
+  padding: 10px;
+}
+
+.desktop-hide {
+  display: none !important;
+}
+
+@media screen and (max-width: 600px) {
+  .mat-form-field.user-name {
+    width: 100%;
+    margin: 0;
+  }
+
+  .mat-card {
+    width: 90%;
+  }
+
+  .mat-form-field.first-name {
+    margin: 0px;
+  }
+
+  .mat-form-field.second-name {
+    margin: 0px;
+  }
+
+  .first-name-error {
+    width: 100%;
+  }
+
+  .second-name-error {
+    width: 100%;
+    margin-left: 0px;
+  }
+
+  .desktop-hide {
+    display: block !important;
+  }
+
+  .mobile-hide {
+    display: none !important;
+  }
+}

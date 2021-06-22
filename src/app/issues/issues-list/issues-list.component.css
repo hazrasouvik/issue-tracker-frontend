@@ -1,0 +1,144 @@
+.content {
+  padding: 16px;
+  margin-top: 1rem;
+}
+
+.add-issue {
+  display: block;
+  text-align: right;
+  margin: auto;
+  padding: 16px;
+}
+mat-card {
+  /*background-color: rgb(176, 173, 166);*/
+  background-color: lightgray;
+  /*height: 350px;*/
+  height: 95%;
+}
+
+.content > mat-card {
+  width: 200px;
+}
+
+.mat-elevation-z4 {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+mat-card-title,
+mat-card-actions {
+  text-align: center;
+}
+
+mat-card-content {
+  text-align: left;
+}
+
+mat-card-content > p > span {
+  font-weight: bold !important;
+}
+
+mat-card-content > p {
+  font-size: 15px;
+  font-weight: 420;
+}
+
+mat-card-title {
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+  cursor: pointer;
+}
+
+.mat-raised-button {
+  margin-right: 7px;
+  margin-top: 1rem;
+}
+
+.fa-trash {
+  margin-right: 5px;
+  margin-bottom: 3px;
+  font-size: 13px;
+}
+button {
+  color: white;
+  font-size: 15px;
+}
+
+.primary-color {
+  background-color: rgba(36, 41, 46, 255);
+}
+
+.warn-color {
+  background-color: rgba(196, 49, 75, 255);
+}
+
+.info-text {
+  text-align: center;
+  font-size: 20px;
+}
+
+.delete-check-box {
+  font-weight: 400px;
+  color: rgba(36, 41, 46, 255);
+}
+
+.search-box {
+  display: inline;
+  float: left;
+  margin-top: 1rem;
+}
+
+.fa-search {
+  color: lightgray;
+  margin-bottom: 0px;
+}
+
+.field {
+  /*width: 170px;
+  height: 2rem;
+  margin-right: 5px;*/
+  padding-left: 10px;
+  outline: none;
+  border-radius: 5px;
+  margin: 0px;
+  width: 95%;
+  height: 15px;
+}
+
+button.mat-icon-button {
+  cursor: default;
+  position: absolute;
+  right: 0px;
+  top: -9px;
+  border: none;
+  height: 30px;
+  width: 20px;
+  border-radius: 100%;
+  outline: none;
+  text-align: center;
+  padding: 2px;
+}
+
+.mat-form-field.search-span {
+  width: 300px;
+  position: relative;
+  float: left;
+}
+
+@media screen and (max-width: 600px) {
+  .sub-header-buttons {
+    display: block;
+    float: left;
+    margin-top: 0px;
+  }
+
+  .content {
+    margin-top: 8rem;
+  }
+
+  mat-card {
+    /*background-color: rgb(176, 173, 166);*/
+    background-color: lightgray;
+    height: 350px;
+  }
+}

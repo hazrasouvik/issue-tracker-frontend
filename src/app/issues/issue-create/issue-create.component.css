@@ -1,0 +1,49 @@
+mat-form-field {
+  margin-top: 1rem;
+}
+
+mat-form-field,
+textarea {
+  width: 100%;
+}
+
+mat-card {
+  width: 500px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+}
+
+.mat-elevation-z4 {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+.main-div {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+}
+
+button {
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+  font-size: 15px;
+  margin-top: 2rem;
+}
+
+mat-error {
+  background-color: rgba(224, 74, 88, 255);
+  color: white;
+  font-size: 20px;
+  height: 20px;
+  text-align: left;
+  margin: auto;
+  padding: 10px;
+}
+
+.decrease-width {
+  width: 150px;
+}

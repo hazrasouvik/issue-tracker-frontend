@@ -1,0 +1,89 @@
+<div class="lds-ring spin-center" *ngIf="isLoading">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<div class="main-div" *ngIf="!isLoading">
+  <mat-card class="mat-elevation-z4">
+    <mat-card-header
+      ><mat-card-title
+        ><p class="sub-title">
+          <i class="fas fa-user fa-sm"></i>
+          Customize Your Dashboard
+        </p></mat-card-title
+      >
+      <mat-card-subtitle
+        ><p class="info-text mat-body-1">
+          Here you can customize your dashboard. Please keep the fields selected
+          which you will like to view in Issues List.
+        </p>
+        <p class="info-text mat-body-1">
+          Also note that, you can always view the full Issue details by clicking
+          on the Issue number irrespective of your customized field selection in
+          dashboard.
+        </p>
+      </mat-card-subtitle></mat-card-header
+    >
+    <mat-card-content>
+      <section class="check-section">
+        <ul>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="description"
+              value="userDetails.customize.description"
+              [(ngModel)]="userDetails.customize.description"
+              >Issue Description</mat-checkbox
+            >
+          </li>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="severity"
+              value="userDetails.customize.severity"
+              [(ngModel)]="userDetails.customize.severity"
+              >Issue Severity</mat-checkbox
+            >
+          </li>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="status"
+              value="userDetails.customize.status"
+              [(ngModel)]="userDetails.customize.status"
+              >Issue Status</mat-checkbox
+            >
+          </li>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="createdDate"
+              value="userDetails.customize.createdDate"
+              [(ngModel)]="userDetails.customize.createdDate"
+              >Issue Created Date</mat-checkbox
+            >
+          </li>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="resolvedDate"
+              value="userDetails.customize.resolvedDate"
+              [(ngModel)]="userDetails.customize.resolvedDate"
+              >Issue Resolved Date</mat-checkbox
+            >
+          </li>
+        </ul>
+      </section>
+      <mat-card-actions>
+        <button mat-raised-button (click)="onSubmit()">Confirm</button>
+      </mat-card-actions>
+    </mat-card-content>
+  </mat-card>
+</div>

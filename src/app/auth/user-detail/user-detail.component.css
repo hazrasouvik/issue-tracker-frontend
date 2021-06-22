@@ -1,0 +1,64 @@
+mat-card {
+  width: 30%;
+  background-color: lightgray;
+  height: 500px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+}
+
+.main-div {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+}
+
+mat-card-content {
+  text-align: left;
+}
+
+mat-card-content > p > span {
+  font-weight: bold !important;
+}
+
+mat-card-content > p {
+  font-size: 22px;
+  font-weight: 420;
+}
+
+.back-button {
+  width: fit-content;
+  margin-top: 1rem;
+  font-size: 17px;
+  height: 60px;
+}
+
+.primary-color {
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+  font-size: 15px;
+}
+
+.warn-color {
+  background-color: rgba(196, 49, 75, 255);
+  color: white;
+  font-size: 15px;
+}
+
+.fa-trash {
+  margin-right: 5px;
+  margin-bottom: 3px;
+  font-size: 13px;
+}
+
+@media screen and (max-width: 600px) {
+  .mat-card {
+    width: 90%;
+    background-color: lightgray;
+    height: 70vh;
+  }
+}

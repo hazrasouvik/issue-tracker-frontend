@@ -1,0 +1,149 @@
+<mat-toolbar [class.responsive]="flag">
+  <span class="brand-name" routerLink=""
+    ><h2><i class="fas fa-diagnoses fa-xs"></i> IssueTracker</h2></span
+  >
+  <span class="brand-spacer"></span>
+
+  <ul>
+    <li>
+      <a
+        mat-button
+        routerLink=""
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="mobile-hide"
+        >About</a
+      >
+    </li>
+    <li>
+      <a
+        mat-button
+        routerLink="issues"
+        routerLinkActive="active"
+        class="mobile-hide"
+        >Issues</a
+      >
+    </li>
+  </ul>
+  <span class="spacer"></span>
+  <ul>
+    <button
+      mat-icon-button
+      (click)="(!flag)"
+      [matMenuTriggerFor]="menu"
+      class="icon-menu"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" [overlapTrigger]="false">
+      <button mat-menu-item class="icon-menu-item">
+        <a
+          mat-button
+          routerLink=""
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="icon-menu-item-button"
+          >About</a
+        >
+      </button>
+      <button mat-menu-item class="icon-menu-item">
+        <a
+          mat-button
+          routerLink="issues"
+          routerLinkActive="active"
+          class="icon-menu-item-button"
+          >Issues</a
+        >
+      </button>
+      <button *ngIf="!isLoggedIn" mat-menu-item class="icon-menu-item">
+        <a
+          mat-button
+          routerLink="auth/login"
+          routerLinkActive="active"
+          class="icon-menu-item-button"
+          >Login</a
+        >
+      </button>
+      <button *ngIf="!isLoggedIn" mat-menu-item class="icon-menu-item">
+        <a
+          mat-button
+          routerLink="auth/register"
+          routerLinkActive="active"
+          class="icon-menu-item-button"
+          >Register</a
+        >
+      </button>
+      <button *ngIf="isLoggedIn" mat-menu-item class="icon-menu-item">
+        <a
+          mat-button
+          [routerLink]="['/auth', 'user', 'customize', userId]"
+          routerLinkActive="active"
+          class="icon-menu-item-button"
+          >Customize</a
+        >
+      </button>
+      <button *ngIf="isLoggedIn" mat-menu-item class="icon-menu-item">
+        <a
+          mat-button
+          [routerLink]="['/auth', 'user', userId]"
+          routerLinkActive="active"
+          class="icon-menu-item-button"
+          >My Profile</a
+        >
+      </button>
+      <button
+        *ngIf="isLoggedIn"
+        mat-menu-item
+        class="icon-menu-item logout-button icon-menu-item-button"
+        (click)="logout()"
+      >
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </mat-menu>
+    <li *ngIf="!isLoggedIn">
+      <a
+        mat-button
+        routerLink="auth/login"
+        routerLinkActive="active"
+        class="mobile-hide"
+        >Login</a
+      >
+    </li>
+    <li *ngIf="!isLoggedIn">
+      <a
+        mat-button
+        routerLink="auth/register"
+        routerLinkActive="active"
+        class="mobile-hide"
+        >Register</a
+      >
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a
+        mat-button
+        [routerLink]="['/auth', 'user', 'customize', userId]"
+        routerLinkActive="active"
+        class="mobile-hide"
+        >Customize</a
+      >
+    </li>
+    <li *ngIf="isLoggedIn">
+      <a
+        mat-button
+        [routerLink]="['/auth', 'user', userId]"
+        routerLinkActive="active"
+        class="mobile-hide profile-view-button"
+        >My Profile</a
+      >
+    </li>
+    <li *ngIf="isLoggedIn">
+      <button
+        mat-raised-button
+        class="logout-button mobile-hide"
+        (click)="logout()"
+      >
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </li>
+  </ul>
+</mat-toolbar>

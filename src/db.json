@@ -1,0 +1,70 @@
+{
+  "issues": [
+    {
+      "id": "e93385d9-fe69-4e22-8584-c779fb5d3820",
+      "description": "On clicking Delete, the application crashes.",
+      "severity": "Critical",
+      "status": "Open",
+      "createdDate": "2021-06-16T18:30:00.000Z",
+      "resolvedDate": "2021-06-18T18:22:03.159Z"
+    },
+    {
+      "id": "e93385d9-fe69-4e22-8584-c779fb5d3819",
+      "description": "The heading Add is wrongly displayed as Edit.",
+      "severity": "Critical",
+      "status": "Closed",
+      "createdDate": "2021-06-14T18:30:00.000Z",
+      "resolvedDate": "2021-06-16T18:30:00.000Z"
+    },
+    {
+      "id": "9a03771d-9e12-464c-b933-a56ed2676864",
+      "description": "The payment functionality is missing.",
+      "severity": "Major",
+      "status": "Open",
+      "createdDate": "2021-06-16T18:30:00.000Z",
+      "resolvedDate": ""
+    },
+    {
+      "id": "72b517f7-c9ee-4ec4-82af-5e7a2ae5344c",
+      "description": "asasasasa",
+      "severity": "Major",
+      "status": "In Progress",
+      "createdDate": "2021-06-16T18:30:00.000Z",
+      "resolvedDate": ""
+    }
+  ],
+  "users": [
+    {
+      "id": "b450fdc4-b85e-41f5-8763-4186803d2cd7",
+      "email": "souvikhazra33@gmail.com",
+      "password": "123456",
+      "firstName": "Souvik",
+      "lastName": "Hazra",
+      "location": "Kolkata",
+      "mobile": "7044206561",
+      "customize": {
+        "description": true,
+        "severity": true,
+        "status": true,
+        "createdDate": true,
+        "resolvedDate": true
+      }
+    },
+    {
+      "id": "9a6161ae-67b3-42c6-8238-00995ab76662",
+      "email": "test2@test.com",
+      "password": "123456",
+      "firstName": "Test",
+      "lastName": "user2",
+      "location": "Delhi",
+      "mobile": "1234567899",
+      "customize": {
+        "description": true,
+        "severity": true,
+        "status": true,
+        "createdDate": false,
+        "resolvedDate": false
+      }
+    }
+  ]
+}

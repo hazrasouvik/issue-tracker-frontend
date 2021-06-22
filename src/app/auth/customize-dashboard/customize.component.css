@@ -1,0 +1,49 @@
+.main-div {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+}
+
+.mat-card {
+  width: 60%;
+}
+
+.mat-card-header {
+  display: flex;
+  justify-content: left;
+}
+
+.sub-title {
+  font: bolder;
+  font-size: x-large;
+}
+
+button.mat-raised-button {
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+  font-size: 17px;
+  margin-top: 2rem;
+}
+
+.info-text {
+  font-size: 17px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 4px;
+}
+
+.check-section {
+  margin: 12px 0;
+}
+
+.check-box {
+  margin: 0 12px;
+}
+
+@media screen and (max-width: 600px) {
+  .mat-card {
+    width: 90%;
+  }
+}

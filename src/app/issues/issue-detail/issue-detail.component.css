@@ -1,0 +1,52 @@
+.mat-elevation-z4 {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+
+mat-card {
+  width: 30%;
+  background-color: lightgray;
+  height: 500px;
+}
+
+mat-card-header {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+}
+
+.main-div {
+  display: flex;
+  justify-content: center;
+  align-items: left;
+}
+
+mat-card-content {
+  text-align: left;
+}
+
+mat-card-content > p > span {
+  font-weight: bold !important;
+}
+
+mat-card-content > p {
+  font-size: 22px;
+  font-weight: 420;
+}
+
+.primary-color {
+  background-color: rgba(36, 41, 46, 255);
+  color: white;
+  font-size: 25px;
+  width: 150px !important;
+  height: 60px;
+}
+
+@media screen and (max-width: 600px) {
+  .mat-card {
+    width: 90%;
+    background-color: lightgray;
+    height: 70vh;
+  }
+}

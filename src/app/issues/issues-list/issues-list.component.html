@@ -1,0 +1,118 @@
+<div class="lds-ring spin-center" *ngIf="isLoading">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="add-issue" *ngIf="!isLoading">
+  <mat-form-field appearance="outline" class="search-span">
+    <input
+      class="search-box field"
+      matInput
+      type="search"
+      [(ngModel)]="descriptionFilter"
+      placeholder="Search for issue description..."
+    /><button mat-icon-button>
+      <i class="fas fa-search search-box search-box-button"></i>
+    </button>
+  </mat-form-field>
+
+  <span class="spacer"></span>
+  <div class="sub-header-buttons">
+    <button
+      mat-raised-button
+      class="primary-color"
+      [routerLink]="['/issues', 'add']"
+    >
+      Add New Issue
+    </button>
+    <button mat-raised-button class="warn-color" (click)="deleteMultiple()">
+      <i class="fas fa-trash"></i>Delete Multiple
+    </button>
+  </div>
+</div>
+<div class="content" *ngIf="!isLoading">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div
+      fxFlex="25%"
+      fxFlex.xs="100%"
+      fxFlex.sm="33%"
+      *ngFor="
+        let issue of issues | searchFilter: descriptionFilter;
+        let i = index
+      "
+    >
+      <mat-card class="mat-elevation-z4 card-display">
+        <mat-card-title [routerLink]="['/issues', issue.id]">
+          <h3>Issue {{ i + 1 }}</h3>
+        </mat-card-title>
+        <mat-card-subtitle
+          ><section class="delete-check">
+            <mat-checkbox
+              class="delete-check-box"
+              color="accent"
+              value="issue.id"
+              [(ngModel)]="issueIdIsChecked[issue.id]"
+              (change)="onChecked($event)"
+              >Select</mat-checkbox
+            >
+          </section></mat-card-subtitle
+        >
+        <mat-card-content *ngIf="!isLoggedIn; else customizedContent">
+          <p><span>Description: </span>{{ issue.description }}</p>
+          <p><span>Severity: </span>{{ issue.severity }}</p>
+          <p><span>Status: </span>{{ issue.status }}</p>
+          <p>
+            <span>Created Date: </span
+            >{{ issue.createdDate | date: "mediumDate" }}
+          </p>
+          <p>
+            <span>Resolved Date: </span
+            >{{ issue.resolvedDate | date: "mediumDate" }}
+          </p>
+        </mat-card-content>
+        <ng-template #customizedContent>
+          <mat-card-content *ngIf="userCustomization !== undefined">
+            <p *ngIf="userCustomization.description">
+              <span>Description: </span>{{ issue.description }}
+            </p>
+            <p *ngIf="userCustomization.severity">
+              <span>Severity: </span>{{ issue.severity }}
+            </p>
+            <p *ngIf="userCustomization.status">
+              <span>Status: </span>{{ issue.status }}
+            </p>
+            <p *ngIf="userCustomization.createdDate">
+              <span>Created Date: </span
+              >{{ issue.createdDate | date: "mediumDate" }}
+            </p>
+            <p *ngIf="userCustomization.resolvedDate">
+              <span>Resolved Date: </span
+              >{{ issue.resolvedDate | date: "mediumDate" }}
+            </p>
+          </mat-card-content>
+        </ng-template>
+
+        <mat-card-actions>
+          <button
+            mat-raised-button
+            class="primary-color"
+            [routerLink]="['/issues', 'edit', issue.id]"
+          >
+            EDIT
+          </button>
+          <button
+            mat-raised-button
+            class="warn-color"
+            (click)="onDelete(issue.id)"
+          >
+            DELETE
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<p class="info-text mat-body-1" *ngIf="issues.length <= 0 && !isLoading">
+  No issues to display!
+</p>
