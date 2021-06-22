@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { AuthService } from "../auth.service";
+import { NgForm } from "@angular/forms";
 
 import { AuthData } from "../auth-data.model";
 import { Subscription } from "rxjs";
@@ -18,6 +19,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
   updateErrors: boolean = false;
   private errorsListenerSub!: Subscription;
 
+  @ViewChild(NgForm, {static: false}) updateForm!: NgForm;
 
   constructor(private authService: AuthService, private route: ActivatedRoute) {}
 
@@ -51,6 +53,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
         "mobile": formValue.mobile
     }
     this.authService.updateUser(updatedUser);
+    this.updateForm.reset();
     this.isLoading = false;
   }
 

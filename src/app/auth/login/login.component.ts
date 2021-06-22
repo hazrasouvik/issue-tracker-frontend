@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "../auth.service";
 
 import { AuthData } from "../auth-data.model";
+import { NgForm } from "@angular/forms";
 
 @Component({
   templateUrl: './login.component.html',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   private userLoginListenerSub!: Subscription;
   loginErrors!: boolean;
 
+    @ViewChild(NgForm, {static: false}) loginForm!: NgForm;
 
   constructor(private authService: AuthService) {}
 
@@ -30,6 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       "password": formValue.password
     }
     this.authService.login(loginUserData);
+    this.loginForm.reset();
     this.isLoading = false;
   }
 

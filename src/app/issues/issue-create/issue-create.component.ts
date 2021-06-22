@@ -92,6 +92,7 @@ export class IssueCreateComponent implements OnInit {
           "resolvedDate": ""
          }
          this.issuesService.updateIssue(updatedIssue);
+         this.addIssueForm.reset();
        }
      }
   }

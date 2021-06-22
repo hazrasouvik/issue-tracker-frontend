@@ -1,6 +1,7 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { Subscription } from "rxjs";
 import { AuthService } from "../auth.service";
+import { NgForm } from "@angular/forms";
 
 import { AuthData } from "../auth-data.model";
 
@@ -13,6 +14,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   locations: string[] = ["Ahmedabad", "Bangalore", "Chennai", "Delhi", "Hyderabad", "Kochi", "Kolkata", "Mumbai", "Pune"];
   private userRegisterListenerSub!: Subscription;
   registrationErrors!: boolean;
+
+  @ViewChild(NgForm, {static: false}) registerForm!: NgForm;
 
   constructor(private authService: AuthService) {}
 
@@ -34,6 +37,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         "mobile": formValue.mobile,
     }
     this.authService.createUser(newUser);
+    this.registerForm.reset();
     this.isLoading = false;
   }
 

@@ -54,7 +54,6 @@
             placeholder="Password"
             #passwordInput="ngModel"
             required
-            minlength="6"
           />
         </mat-form-field>
         <div
@@ -65,11 +64,6 @@
         >
           <div *ngIf="passwordInput.errors?.required">
             <mat-error>Please enter your password!</mat-error>
-          </div>
-          <div *ngIf="passwordInput.errors?.minlength">
-            <mat-error
-              >Your password can't be less than 6 characters!</mat-error
-            >
           </div>
         </div>
         <br
