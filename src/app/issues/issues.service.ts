@@ -25,18 +25,23 @@ export class IssuesService {
 
     constructor(private _http: HttpClient, private router: Router, private authService: AuthService){}
 
-    getIssues(){
+    getAllIssues() {
+      return this._http.get<Issue[]>(this._issuesUrl);
+    }
+
+    //http://localhost:3001/issues?_page=1&_limit=20
+    getIssues(issuesPerPage: number, currentPage: number){
         if(this.authService.getIsLoggedIn()) {
           this.authService.getUserDetails(this.authService.getloggedInUserId())
           .subscribe((userDetails: any) => {
-        this._http.get<Issue[]>(this._issuesUrl)
+        this._http.get<Issue[]>(this._issuesUrl + "?_page=" + currentPage + "&_limit=" + issuesPerPage)
         .subscribe((issues: any) => {
           this.issues = issues,
           this.issuesUpdated.next({issues: [...this.issues], issueCount: this.issues.length, loggedInUserCustomize: userDetails.customize});
         });
           });
         } else {
-          this._http.get<Issue[]>(this._issuesUrl)
+          this._http.get<Issue[]>(this._issuesUrl + "?_page=" + currentPage + "&_limit=" + issuesPerPage)
         .subscribe((issues: any) => {
           this.issues = issues,
           this.issuesUpdated.next({issues: [...this.issues], issueCount: this.issues.length, loggedInUserCustomize: null});

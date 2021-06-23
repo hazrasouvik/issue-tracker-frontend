@@ -51,7 +51,7 @@
     >
       <mat-card class="mat-elevation-z4 card-display">
         <mat-card-title [routerLink]="['/issues', issue.id]">
-          <h3>Issue {{ i + 1 }}</h3>
+          <h3>Issue {{ issuesPerPage * (currentPage - 1) + i + 1 }}</h3>
         </mat-card-title>
         <mat-card-subtitle
           ><section class="delete-check">
@@ -120,6 +120,14 @@
     </div>
   </div>
 </div>
+<mat-paginator
+  [length]="totalIssues"
+  [pageSize]="issuesPerPage"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="onChangedPage($event)"
+  *ngIf="issues.length > 0"
+>
+</mat-paginator>
 <p class="info-text mat-body-1" *ngIf="issues.length <= 0 && !isLoading">
   No issues to display!
 </p>

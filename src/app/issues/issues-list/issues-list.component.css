@@ -125,6 +125,10 @@ button.mat-icon-button {
   float: left;
 }
 
+.mat-paginator {
+  margin-bottom: 0px;
+}
+
 @media screen and (max-width: 600px) {
   .sub-header-buttons {
     display: block;
