@@ -38,7 +38,7 @@ export class CustomizeComponent implements OnInit, OnDestroy {
       })
   }
 
-  onSubmit(){
+  onUpdate(){
     this.isLoading = true;
     let customizedUser = {
         "id": this.userId,

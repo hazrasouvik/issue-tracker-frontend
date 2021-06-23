@@ -4,7 +4,7 @@
   <div></div>
   <div></div>
 </div>
-<div class="main-div" *ngIf="!isLoading">
+<div class="main-div" *ngIf="!isLoading && totalIssues > 0">
   <mat-tab-group dynamicHeight class="mobile-hide" mat-stretch-tabs>
     <mat-tab label="Bar Graph">
       <mat-card>
@@ -265,3 +265,6 @@
     </mat-tab>
   </mat-tab-group>
 </div>
+<p class="info-text mat-body-1" *ngIf="totalIssues <= 0 && !isLoading">
+  No issues added yet to display the analytics!
+</p>
