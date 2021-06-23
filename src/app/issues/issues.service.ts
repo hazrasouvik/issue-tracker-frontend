@@ -19,7 +19,9 @@ export class IssuesService {
     };
 
     private issues: Issue[] = [];
+    private topViewedIssues: Issue[] = [];
     private issuesUpdated = new Subject<{ issues: Issue[], issueCount: number, loggedInUserCustomize: {} | null}>();
+    private topViewedIssuesUpdated = new Subject<{ issues: Issue[], issueCount: number, customIssues: number}>();
 
     constructor(private _http: HttpClient, private router: Router, private authService: AuthService){}
 
@@ -42,23 +44,39 @@ export class IssuesService {
         }
     }
 
+
     getIssue(issueId: string | null) {
       return this._http.get(this._issuesUrl + "/" + issueId);
+    }
+
+    //http://localhost:3001/issues?_sort=issueViewCount&_order=desc
+    getTopViewedSortedIssues(customIssues: any) {
+      this._http.get<Issue[]>(this._issuesUrl + "?_sort=issueViewCount&_order=desc")
+        .subscribe((issues: any) => {
+          this.topViewedIssues = issues,
+          this.topViewedIssuesUpdated.next({issues: [...this.topViewedIssues], issueCount: this.topViewedIssues.length, customIssues: customIssues});
+          });
     }
 
     getIssueUpdateListener() {
       return this.issuesUpdated.asObservable();
     }
 
+    getTopViewedIssueUpdateListener() {
+      return this.topViewedIssuesUpdated.asObservable();
+    }
+
     addIssue(issue: any){
       let id = uuidv4();
+      let issueViewCount = 0;
       let newIssue: Issue = {
           "id": id,
           "description": issue.description,
           "severity": issue.severity,
           "status": issue.status,
           "createdDate": issue.createdDate,
-          "resolvedDate": issue.resolvedDate
+          "resolvedDate": issue.resolvedDate,
+          "issueViewCount": issueViewCount
       }
       this._http.post(this._issuesUrl, newIssue, this.httpOptions)
       .subscribe(() => {
@@ -67,10 +85,17 @@ export class IssuesService {
   }
 
     updateIssue(issue: any) {
-      this._http.put(this._issuesUrl + '/' + issue.id, issue, this.httpOptions)
+      this._http.patch(this._issuesUrl + '/' + issue.id, issue, this.httpOptions)
   .subscribe(() => {
     this.router.navigate(["/issues"]);
   });
+    }
+
+    updateIssueCount(issue: any) {
+      this._http.patch(this._issuesUrl + '/' + issue.id, issue, this.httpOptions)
+      .subscribe(() => {
+        console.log("Issue Count update success");
+      });
     }
 
   deleteIssue(issueId: string){

@@ -12,7 +12,7 @@ import { IssuesService } from '../issues.service';
 export class IssuesDetailComponent implements OnInit {
     isLoading: boolean = false;
     id: any;
-    issue: any = {'description': '', 'severity': '', 'status': '', 'createdDate': '', 'resolvedDate': ''};
+    issue: any = {'description': '', 'severity': '', 'status': '', 'createdDate': '', 'resolvedDate': '', 'issueViewCount': 0};
 
     constructor(public issuesService: IssuesService, public route: ActivatedRoute) {}
     ngOnInit() {
@@ -26,7 +26,13 @@ export class IssuesDetailComponent implements OnInit {
         this.issue.status = issue.status;
         this.issue.createdDate = issue.createdDate;
         this.issue.resolvedDate = issue.resolvedDate;
+        this.issue.issueViewCount = issue.issueViewCount + 1;
         this.isLoading = false;
+        let updatedCountIssue = {
+          "id": this.id,
+          "issueViewCount": this.issue.issueViewCount
+        }
+        this.issuesService.updateIssueCount(updatedCountIssue);
       });
     }
 }

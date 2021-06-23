@@ -141,7 +141,7 @@ export class AuthService {
     }
 
     customizeUser(user: any) {
-      return this._http.patch(this._usersUrl + '/' + user.id, user, this.httpOptions)
+      this._http.patch(this._usersUrl + '/' + user.id, user, this.httpOptions)
       .subscribe(() => {
         console.log("Customize success");
         this.userLoginListener.next({user: this.loggedInUsersDetails, loginStatus:true, validationErrors: false});

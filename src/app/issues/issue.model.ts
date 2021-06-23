@@ -5,4 +5,5 @@ export interface Issue {
   status: string;
   createdDate: string | Date;
   resolvedDate: string | Date;
+  issueViewCount: number;
 }

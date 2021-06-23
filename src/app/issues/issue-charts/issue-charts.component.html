@@ -1,0 +1,267 @@
+<div class="lds-ring spin-center" *ngIf="isLoading">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="main-div" *ngIf="!isLoading">
+  <mat-tab-group dynamicHeight class="mobile-hide" mat-stretch-tabs>
+    <mat-tab label="Bar Graph">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-bar-vertical
+          [view]="[1500, 540]"
+          [results]="customIssuesChart"
+          [scheme]="colorScheme"
+          [xAxisLabel]="'Issues'"
+          [legendTitle]="'Top Viewed Issues'"
+          [yAxisLabel]="'Views'"
+          [legend]="true"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="true"
+        >
+        </ngx-charts-bar-vertical>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Pie Chart">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-pie-chart
+          [results]="customIssuesChart"
+          [scheme]="colorScheme"
+          [legend]="true"
+          [legendTitle]="'Top Viewed Issues'"
+          [view]="[1500, 550]"
+          [labels]="true"
+        >
+        </ngx-charts-pie-chart>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Advanced Pie Chart">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-advanced-pie-chart
+          [results]="issuesChart"
+          [scheme]="colorScheme"
+          [view]="[1500, 550]"
+          [gradient]="true"
+        >
+        </ngx-charts-advanced-pie-chart>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Pie Grid">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-pie-grid
+          [results]="issuesChart"
+          [scheme]="colorScheme"
+          [view]="[1500, 550]"
+        >
+        </ngx-charts-pie-grid>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Customize">
+      <mat-card class="mat-elevation-z4 customize-card">
+        <mat-card-header class="customize-card-header"
+          ><mat-card-title
+            ><p class="sub-title">
+              <i class="fas fa-user fa-sm"></i>
+              Customize Your Issue Analytics Dashboard
+            </p></mat-card-title
+          >
+          <mat-card-subtitle class="customize-card-sub-title"
+            ><p class="info-text mat-body-1 customize-card-info">
+              Here you can customize the total number of Top Viewed Issues you
+              want to analyse. Please select either from the dropdown options or
+              specify a custom number by yourself(The custom number has to be a
+              valid number to enable the Update button).
+            </p>
+            <p class="info-text mat-body-1 customize-card-info">
+              Also note that, this customization is for Bar Graph and Pie Chart.
+              The Advanced Pie Chart and Pie Grid will always show the stats
+              based on the total number of issues.
+            </p>
+          </mat-card-subtitle></mat-card-header
+        >
+        <mat-card-content>
+          <form
+            #customizeForm="ngForm"
+            (ngSubmit)="onSubmit(customizeForm.value)"
+          >
+            <mat-form-field class="decrease-width" appearance="outline">
+              <mat-label
+                >Select number of Top Viewed Issues for Analysis</mat-label
+              >
+              <mat-select
+                name="dropdownIssues"
+                [(ngModel)]="dropdownNumOfTopIssuesToDispaly"
+                ngModel
+                #dropdownIssueInput="ngModel"
+                [disabled]="customIssuesInput.value"
+              >
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Input a custom number</mat-label>
+              <input
+                matInput
+                name="customIssues"
+                ngModel
+                type="number"
+                [(ngModel)]="customNumOfTopIssuesToDispaly"
+                #customIssuesInput="ngModel"
+                placeholder="Input a custom number"
+                [disabled]="dropdownIssueInput.value"
+              />
+            </mat-form-field>
+            <button
+              mat-raised-button
+              type="submit"
+              [disabled]="
+                !(customIssuesInput.value > 0 || dropdownIssueInput.value)
+              "
+            >
+              Update
+            </button>
+            <button mat-raised-button type="reset">Reset</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+  <!--For Mobiles-->
+  <mat-tab-group dynamicHeight class="desktop-hide" mat-stretch-tabs>
+    <mat-tab label="Bar Graph">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-bar-vertical
+          [view]="[480, 520]"
+          [results]="customIssuesChart"
+          [scheme]="colorScheme"
+          [xAxisLabel]="'Issues'"
+          [yAxisLabel]="'Views'"
+          [showXAxisLabel]="true"
+          [showYAxisLabel]="true"
+          [xAxis]="true"
+          [yAxis]="true"
+          [gradient]="true"
+        >
+        </ngx-charts-bar-vertical>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Pie Chart">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-pie-chart
+          [results]="customIssuesChart"
+          [scheme]="colorScheme"
+          [view]="[480, 520]"
+          [labels]="true"
+        >
+        </ngx-charts-pie-chart>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Advance Pie Chart">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-advanced-pie-chart
+          [results]="issuesChart"
+          [scheme]="colorScheme"
+          [view]="[480, 520]"
+          [gradient]="true"
+        >
+        </ngx-charts-advanced-pie-chart>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Pie Grid">
+      <mat-card>
+        <mat-card-title></mat-card-title>
+        <ngx-charts-pie-grid
+          [results]="issuesChart"
+          [scheme]="colorScheme"
+          [view]="[480, 520]"
+        >
+        </ngx-charts-pie-grid>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Customize">
+      <mat-card class="mat-elevation-z4 customize-card">
+        <mat-card-header class="customize-card-header"
+          ><mat-card-title
+            ><p class="sub-title">
+              <i class="fas fa-user fa-sm"></i>
+              Customize Your Issue Analytics Dashboard
+            </p></mat-card-title
+          >
+          <mat-card-subtitle class="customize-card-sub-title"
+            ><p class="info-text mat-body-1 customize-card-info">
+              Here you can customize the total number of Top Viewed Issues you
+              want to analyse. Please select either from the dropdown options or
+              specify a custom number by yourself(The custom number has to be a
+              valid number to enable the Update button).
+            </p>
+            <p class="info-text mat-body-1 customize-card-info">
+              Also note that, this customization is for Bar Graph and Pie Chart.
+              The Advanced Pie Chart and Pie Grid will always show the stats
+              based on the total number of issues.
+            </p>
+          </mat-card-subtitle></mat-card-header
+        >
+        <mat-card-content>
+          <form
+            #customizeForm="ngForm"
+            (ngSubmit)="onSubmit(customizeForm.value)"
+          >
+            <mat-form-field class="decrease-width" appearance="outline">
+              <mat-label
+                >Select number of Top Viewed Issues for Analysis</mat-label
+              >
+              <mat-select
+                name="dropdownIssues"
+                [(ngModel)]="dropdownNumOfTopIssuesToDispaly"
+                ngModel
+                #dropdownIssueInput="ngModel"
+                [disabled]="customIssuesInput.value"
+              >
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{ option }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Input a custom number</mat-label>
+              <input
+                matInput
+                name="customIssues"
+                ngModel
+                type="number"
+                [(ngModel)]="customNumOfTopIssuesToDispaly"
+                #customIssuesInput="ngModel"
+                placeholder="Input a custom number"
+                [disabled]="dropdownIssueInput.value"
+              />
+            </mat-form-field>
+            <button
+              mat-raised-button
+              type="submit"
+              [disabled]="
+                !(customIssuesInput.value > 0 || dropdownIssueInput.value)
+              "
+            >
+              Update
+            </button>
+            <button mat-raised-button type="reset">Reset</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>
