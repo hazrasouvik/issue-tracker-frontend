@@ -34,7 +34,6 @@ export class IssueChartsComponent implements OnInit, OnDestroy{
     this.isLoading = true;
     this.issuesService.getTopViewedSortedIssues(this.issuesToDisplay);
     this.issuesSub = this.issuesService.getTopViewedIssueUpdateListener().subscribe((issueData: {issues: Issue[], issueCount: number, customIssues: number}) => {
-      console.log("Inside Sub");
     this.isLoading=false;
     this.issues = issueData.issues;
     this.totalIssues = issueData.issueCount;
@@ -44,7 +43,6 @@ export class IssueChartsComponent implements OnInit, OnDestroy{
       this.issuesToDisplay = issueData.customIssues;
     }
     this.issuesChart = [{}];
-    console.log(JSON.stringify(issueData));
     for(let i=0; i<issueData.issueCount; i++) {
       this.issuesChart[i] = { name: issueData.issues[i].description, value: issueData.issues[i].issueViewCount };
     }

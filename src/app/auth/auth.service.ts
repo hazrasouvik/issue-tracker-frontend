@@ -20,6 +20,7 @@ export class AuthService {
   private userLoginListener = new Subject<{ user: AuthData | null, loginStatus: boolean, validationErrors: boolean }>();
   private loggedInUsersDetails!: AuthData;
   private userId!: string | null;
+  loginCount: number = 0;
 
     constructor(private _http: HttpClient, private router: Router){}
 
@@ -78,6 +79,7 @@ export class AuthService {
       this._http.get((this._usersUrl + "?email=" + userDetails.email + "&password=" + userDetails.password))
       .subscribe((response: any) => {
         if(response.length === 1) {
+          if(this.loginCount === 0)
         this.router.navigate(["/issues"]);
         this.loggedInUsersDetails = response[0];
         this.userId = this.loggedInUsersDetails.id;
@@ -105,6 +107,7 @@ export class AuthService {
     if(!authInformation){
       return;
     }
+    this.loginCount+=1;
     console.log("Auto Auth user")
       this.isLoggedIn = (authInformation.isLoggedIn === "true");
       this.userId = authInformation.userId;
@@ -117,6 +120,7 @@ export class AuthService {
     logout() {
       this.userLoginListener.next({user: null, loginStatus: false, validationErrors: false});
       console.log("Logged out");
+      this.loginCount = 0;
       this.userId = null;
       this.clearAuthData();
       this.isLoggedIn = false;
