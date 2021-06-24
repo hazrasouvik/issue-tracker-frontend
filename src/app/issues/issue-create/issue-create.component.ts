@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Issue } from '../issue.model';
 
 import { IssuesService } from '../issues.service';
@@ -19,10 +20,13 @@ export class IssueCreateComponent implements OnInit {
   issue!: any;
   mode = 'add';
   private issueId!: string | null;
+  loggedInUserId!: string | null;
+  creator!: string;
+  lastModifiedBy!: string;
 
   @ViewChild(NgForm, {static:false}) addIssueForm!: NgForm;
 
-  constructor(private issuesService: IssuesService, private route: ActivatedRoute) {}
+  constructor(private issuesService: IssuesService, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
     this.issue = {'description': '', 'severity': '', 'status': '', 'createdDate': '', 'resolvedDate': ''};
@@ -39,11 +43,22 @@ export class IssueCreateComponent implements OnInit {
           else {
             this.issue = {id: issueData.id, description: issueData.description, severity: issueData.severity, status: issueData.status, createdDate: new Date(issueData.createdDate), resolvedDate: new Date()};
           }
+        this.loggedInUserId = this.authService.getloggedInUserId();
+          this.authService.getUserDetails(this.loggedInUserId)
+        .subscribe((user: any) => {
+          this.lastModifiedBy = user.firstName + " " + user.lastName;
+          console.log(this.lastModifiedBy);
+        });
           });
       } else {
         this.mode = 'add';
         this.issueId = null;
-        this.isLoading = false;
+        this.loggedInUserId = this.authService.getloggedInUserId();
+        this.authService.getUserDetails(this.loggedInUserId)
+        .subscribe((user: any) => {
+          this.creator = user.firstName + " " + user.lastName;
+          this.isLoading = false;
+        });
       }
     });
   }
@@ -58,7 +73,8 @@ export class IssueCreateComponent implements OnInit {
         "severity": formValue.severity,
         "status": formValue.status,
         "createdDate": formValue.createdDate,
-        "resolvedDate": formValue.resolvedDate
+        "resolvedDate": formValue.resolvedDate,
+        "creator": this.creator
       }
       this.issuesService.addIssue(newIssue);
      } else {
@@ -68,7 +84,8 @@ export class IssueCreateComponent implements OnInit {
         "severity": formValue.severity,
         "status": formValue.status,
         "createdDate": formValue.createdDate,
-        "resolvedDate": formValue.resolvedDate
+        "resolvedDate": formValue.resolvedDate,
+        "lastModifiedBy": this.lastModifiedBy
        }
        this.issuesService.updateIssue(updatedIssue);
      }}
@@ -79,7 +96,8 @@ export class IssueCreateComponent implements OnInit {
           "severity": formValue.severity,
           "status": formValue.status,
           "createdDate": formValue.createdDate,
-          "resolvedDate": ""
+          "resolvedDate": "",
+          "creator": this.creator
         }
         this.issuesService.addIssue(newIssue);
        } else {
@@ -89,7 +107,8 @@ export class IssueCreateComponent implements OnInit {
           "severity": formValue.severity,
           "status": formValue.status,
           "createdDate": formValue.createdDate,
-          "resolvedDate": ""
+          "resolvedDate": "",
+          "lastModifiedBy": this.lastModifiedBy
          }
          this.issuesService.updateIssue(updatedIssue);
          this.addIssueForm.reset();

@@ -11,7 +11,7 @@
       matInput
       type="search"
       [(ngModel)]="descriptionFilter"
-      placeholder="Search for issue description..."
+      placeholder="Search for an issue description..."
     /><button mat-icon-button>
       <i class="fas fa-search search-box search-box-button"></i>
     </button>
@@ -77,6 +77,11 @@
             <span>Resolved Date: </span
             >{{ issue.resolvedDate | date: "mediumDate" }}
           </p>
+          <p><span>Created By: </span>{{ issue.creator | titlecase }}</p>
+          <p>
+            <span>Last Modified By: </span
+            >{{ issue.lastModifiedBy | titlecase }}
+          </p>
         </mat-card-content>
         <ng-template #customizedContent>
           <mat-card-content *ngIf="userCustomization !== undefined">
@@ -96,6 +101,13 @@
             <p *ngIf="userCustomization.resolvedDate">
               <span>Resolved Date: </span
               >{{ issue.resolvedDate | date: "mediumDate" }}
+            </p>
+            <p *ngIf="userCustomization.creator">
+              <span>Created By: </span>{{ issue.creator | titlecase }}
+            </p>
+            <p *ngIf="userCustomization.lastModifiedBy">
+              <span>Last Modified By: </span
+              >{{ issue.lastModifiedBy | titlecase }}
             </p>
           </mat-card-content>
         </ng-template>
@@ -125,7 +137,7 @@
   [pageSize]="issuesPerPage"
   [pageSizeOptions]="pageSizeOptions"
   (page)="onChangedPage($event)"
-  *ngIf="totalIssues <= 0"
+  *ngIf="totalIssues > 0"
 >
 </mat-paginator>
 <p class="info-text mat-body-1" *ngIf="totalIssues <= 0 && !isLoading">

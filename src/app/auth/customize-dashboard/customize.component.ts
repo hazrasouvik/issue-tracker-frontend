@@ -47,7 +47,9 @@ export class CustomizeComponent implements OnInit, OnDestroy {
         "severity": this.userDetails.customize.severity,
         "status": this.userDetails.customize.status,
         "createdDate": this.userDetails.customize.createdDate,
-        "resolvedDate": this.userDetails.customize.resolvedDate
+        "resolvedDate": this.userDetails.customize.resolvedDate,
+        "creator": this.userDetails.customize.creator,
+        "lastModifiedBy": this.userDetails.customize.lastModifiedBy
         }
     }
     this.authService.customizeUser(customizedUser);

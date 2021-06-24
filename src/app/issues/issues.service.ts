@@ -81,7 +81,9 @@ export class IssuesService {
           "status": issue.status,
           "createdDate": issue.createdDate,
           "resolvedDate": issue.resolvedDate,
-          "issueViewCount": issueViewCount
+          "issueViewCount": issueViewCount,
+          "creator": issue.creator,
+          "lastModifiedBy": ""
       }
       this._http.post(this._issuesUrl, newIssue, this.httpOptions)
       .subscribe(() => {

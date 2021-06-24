@@ -6,8 +6,10 @@
       "severity": "Critical",
       "status": "Open",
       "createdDate": "2021-06-16T18:30:00.000Z",
-      "resolvedDate": "2021-06-18T18:22:03.159Z",
-      "issueViewCount": 3
+      "resolvedDate": "",
+      "issueViewCount": 3,
+      "creator": "Test user2",
+      "lastModifiedBy": "Souvik Hazra"
     },
     {
       "id": "e93385d9-fe69-4e22-8584-c779fb5d3819",
@@ -16,7 +18,9 @@
       "status": "Closed",
       "createdDate": "2021-06-14T18:30:00.000Z",
       "resolvedDate": "2021-06-16T18:30:00.000Z",
-      "issueViewCount": 7
+      "issueViewCount": 11,
+      "creator": "Test user2",
+      "lastModifiedBy": ""
     },
     {
       "id": "9a03771d-9e12-464c-b933-a56ed2676864",
@@ -25,16 +29,42 @@
       "status": "Open",
       "createdDate": "2021-06-16T18:30:00.000Z",
       "resolvedDate": "",
-      "issueViewCount": 1
+      "issueViewCount": 1,
+      "creator": "Test user2",
+      "lastModifiedBy": ""
     },
     {
       "id": "21c7ee5c-f603-4fea-b0a4-128dc206b7e2",
       "description": "The payment gateway is crashing.",
       "severity": "Major",
-      "status": "Open",
+      "status": "In Progress",
       "createdDate": "2021-06-21T18:30:00.000Z",
       "resolvedDate": "",
-      "issueViewCount": 3
+      "issueViewCount": 5,
+      "creator": "Test user2",
+      "lastModifiedBy": "Test user2"
+    },
+    {
+      "id": "c5f7882d-c65d-4043-9a72-2c7097eb04d5",
+      "description": "Test Issue 1",
+      "severity": "Critical",
+      "status": "Open",
+      "createdDate": "2021-06-23T18:30:00.000Z",
+      "resolvedDate": "",
+      "issueViewCount": 0,
+      "creator": "Test user2",
+      "lastModifiedBy": ""
+    },
+    {
+      "id": "3072274f-4667-48cb-b51d-cf7dbded1934",
+      "description": "Test Issue 2",
+      "severity": "Minor",
+      "status": "In Progress",
+      "createdDate": "2021-06-23T18:30:00.000Z",
+      "resolvedDate": "",
+      "issueViewCount": 0,
+      "creator": "Souvik Hazra",
+      "lastModifiedBy": ""
     }
   ],
   "users": [
@@ -51,7 +81,9 @@
         "severity": true,
         "status": true,
         "createdDate": true,
-        "resolvedDate": true
+        "resolvedDate": true,
+        "creator": true,
+        "lastModifiedBy": true
       }
     },
     {
@@ -67,7 +99,9 @@
         "severity": true,
         "status": true,
         "createdDate": true,
-        "resolvedDate": true
+        "resolvedDate": true,
+        "creator": true,
+        "lastModifiedBy": true
       }
     }
   ]

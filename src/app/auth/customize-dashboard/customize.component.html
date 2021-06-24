@@ -79,6 +79,26 @@
               >Issue Resolved Date</mat-checkbox
             >
           </li>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="creator"
+              value="userDetails.customize.creator"
+              [(ngModel)]="userDetails.customize.creator"
+              >Issue Created By</mat-checkbox
+            >
+          </li>
+          <li>
+            <mat-checkbox
+              class="check-box"
+              color="accent"
+              name="lastModifiedBy"
+              value="userDetails.customize.lastModifiedBy"
+              [(ngModel)]="userDetails.customize.lastModifiedBy"
+              >Issue Last Modified By</mat-checkbox
+            >
+          </li>
         </ul>
       </section>
       <mat-card-actions>

@@ -11,6 +11,8 @@ export interface AuthData {
     "severity": boolean,
     "status": boolean,
     "createdDate": boolean,
-    "resolvedDate": boolean
+    "resolvedDate": boolean,
+    "creator": boolean,
+    "lastModifiedBy": boolean
   }
 }

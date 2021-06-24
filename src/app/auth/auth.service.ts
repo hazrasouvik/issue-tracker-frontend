@@ -51,7 +51,9 @@ export class AuthService {
           "severity": true,
           "status": true,
           "createdDate": true,
-          "resolvedDate": true
+          "resolvedDate": true,
+          "creator": true,
+          "lastModifiedBy": true
         }
       }
       this._http.get((this._usersUrl + "?email=" + user.email))

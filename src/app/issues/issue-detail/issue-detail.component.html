@@ -19,6 +19,10 @@
         <span>Resolved Date: </span
         >{{ issue.resolvedDate | date: "mediumDate" }}
       </p>
+      <p><span>Created By: </span>{{ issue.creator | titlecase }}</p>
+      <p>
+        <span>Last Modified By: </span>{{ issue.lastModifiedBy | titlecase }}
+      </p>
     </mat-card-content>
     <br />
     <button mat-raised-button class="primary-color" [routerLink]="['/issues']">

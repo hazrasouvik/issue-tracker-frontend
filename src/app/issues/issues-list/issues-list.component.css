@@ -14,7 +14,7 @@ mat-card {
   /*background-color: rgb(176, 173, 166);*/
   background-color: lightgray;
   /*height: 350px;*/
-  height: 93%;
+  height: 95%;
 }
 
 .content > mat-card {
@@ -144,6 +144,6 @@ button.mat-icon-button {
   mat-card {
     /*background-color: rgb(176, 173, 166);*/
     background-color: lightgray;
-    height: 350px;
+    height: 93%;
   }
 }

@@ -6,4 +6,6 @@ export interface Issue {
   createdDate: string | Date;
   resolvedDate: string | Date;
   issueViewCount: number;
+  creator: string;
+  lastModifiedBy: string;
 }
