@@ -31,7 +31,7 @@ a.active {
 
 mat-toolbar {
   background-color: rgba(36, 41, 46, 255);
-  margin-bottom: 1rem;
+  margin-bottom: -22px;
 }
 
 .brand-name {

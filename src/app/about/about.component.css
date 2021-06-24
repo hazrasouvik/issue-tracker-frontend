@@ -1,0 +1,74 @@
+div.container {
+  background-image: url("../images/fgtt-min.jpg") !important;
+  height: 1100px;
+  margin-top: 22.3px !important;
+  display: block;
+  text-align: left;
+  margin: auto;
+  padding: 1px;
+}
+
+.card-container {
+  width: 29%;
+  float: right;
+  padding: 1px;
+  margin-top: 1rem;
+}
+
+.mat-card {
+  height: 270px;
+  width: 170px;
+  margin-bottom: 2rem;
+  background-color: lightgray;
+}
+
+.mat-card-title {
+  font-weight: bold;
+  font-size: 25px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgba(36, 41, 46, 255);
+}
+
+.mat-card-content {
+  font-style: italic;
+  font-weight: lighter;
+  font-family: serif;
+  font-size: 17px;
+  margin-top: 1rem;
+}
+
+.info-text {
+  color: white;
+  font-weight: bolder;
+  font-size: 30px;
+  width: 22%;
+  margin-left: 3rem;
+  margin-top: 25rem;
+}
+
+.text-container {
+  float: left;
+  width: 20%;
+}
+
+@media screen and (max-width: 600px) {
+  div.container {
+    height: 2226px;
+  }
+
+  .card-container {
+    width: 70%;
+    margin: auto;
+  }
+
+  .info-text {
+    width: 100%;
+    margin: auto;
+    margin-top: 127rem;
+    margin-left: 1rem;
+  }
+
+  .text-container {
+    width: 10%;
+  }
+}

@@ -1,3 +1,56 @@
-<h2>
-  About: This application is used to track the status of the issues raised
-</h2>
+<div class="container">
+  <br /><br /><br /><br />
+  <div class="card-container">
+    <div fxLayout="row wrap" fxLayoutGap="1px grid">
+      <div
+        fxFlex="50%"
+        fxFlex.xs="100%"
+        fxFlex.sm="33%"
+        *ngFor="let index of loop"
+      >
+        <mat-card>
+          <mat-card-header>
+            <i
+              *ngIf="index === 0"
+              mat-card-avatar
+              class="fas fa-list-ul fa-2x"
+            ></i>
+            <i
+              *ngIf="index === 1"
+              mat-card-avatar
+              class="fas fa-info-circle fa-2x"
+            ></i>
+            <i
+              *ngIf="index === 2"
+              mat-card-avatar
+              class="fas fa-plus-circle fa-2x"
+            ></i>
+            <i
+              *ngIf="index === 3"
+              mat-card-avatar
+              class="fas fa-edit fa-2x"
+            ></i>
+            <i
+              *ngIf="index === 4"
+              mat-card-avatar
+              class="far fa-trash-alt fa-2x"
+            ></i>
+            <i
+              *ngIf="index === 5"
+              mat-card-avatar
+              class="fas fa-chart-bar fa-2x"
+            ></i>
+            <mat-card-title>{{ cardHeaders[index] }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>{{ cardContents[index] }}</mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="text=container">
+    <div class="info-text">
+      Issue Tracker focuses on tracking the status and analysing the stats of
+      all the created issues
+    </div>
+  </div>
+</div>

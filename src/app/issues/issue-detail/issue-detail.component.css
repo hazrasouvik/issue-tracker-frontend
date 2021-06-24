@@ -20,6 +20,7 @@ mat-card-header {
   display: flex;
   justify-content: center;
   align-items: left;
+  margin-top: 2.5rem;
 }
 
 mat-card-content {

@@ -17,6 +17,7 @@ body {
   height: 80px;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
 }
 .lds-ring div {
   box-sizing: border-box;
