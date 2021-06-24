@@ -29,6 +29,7 @@ userCustomization: any;
 issuesPerPage = 2;
 currentPage = 1;
 pageSizeOptions = [1, 2, 5, 10];
+issuesDisplayedPerPage!: number;//As in the last page issuesPerPage maybe greater than actual issues diplayed.
 
 
 constructor(public issuesService: IssuesService, private router: Router, private authService: AuthService) {}
@@ -41,26 +42,20 @@ ngOnInit() {
   this.issuesSub = this.issuesService.getIssueUpdateListener().subscribe((issueData: {issues: Issue[], issueCount: number, loggedInUserCustomize: {} | null}) => {
     this.isLoading=false;
     this.issues = issueData.issues;
+    this.issuesDisplayedPerPage = issueData.issueCount;
     this.issuesService.getAllIssues()
     .subscribe((issues: any) => {
       this.totalIssues = issues.length;
     });
     this.userCustomization = issueData.loggedInUserCustomize;
-    console.log("From Issue Sub "+JSON.stringify(this.userCustomization));
-    if (this.totalIssues < this.issuesPerPage) {
-    for(let i=0; i < this.totalIssues; i++){
+
+    for(let i=0; i < issueData.issueCount; i++){
       this.issueIdArr[i] = this.issues[i].id;
       this.isCheckedArr[i] = false;
       this.issueIdIsChecked[this.issues[i].id] = false;
     }
-  }
-  else if (this.totalIssues >= this.issuesPerPage) {
-    for(let i=0; i < this.issuesPerPage; i++){
-      this.issueIdArr[i] = this.issues[i].id;
-      this.isCheckedArr[i] = false;
-      this.issueIdIsChecked[this.issues[i].id] = false;
-    }
-  }
+
+
   });
   this.isLoggedIn = this.authService.getIsLoggedIn();
   this.userLoginListenerSub = this.authService.getUserLoginStatusListener().subscribe((userLoginData: {user: AuthData | null, loginStatus: boolean, validationErrors: boolean}) => {
@@ -79,8 +74,7 @@ deleteMultiple() {
   this.isLoading = true;
   this.flag = false;
   if(this.isLoggedIn) {
-    if (this.totalIssues < this.issuesPerPage) {
-  for(let i=0; i < this.totalIssues; i++){
+  for(let i=0; i < this.issuesDisplayedPerPage; i++){
     if(this.issueIdIsChecked[this.issues[i].id]) {
       this.flag = true;
       this.issuesService.deleteIssue(this.issues[i].id).subscribe(() => {
@@ -91,19 +85,6 @@ deleteMultiple() {
        });
     }
   }
-} else if (this.totalIssues >= this.issuesPerPage) {
-  for(let i=0; i < this.issuesPerPage; i++){
-    if(this.issueIdIsChecked[this.issues[i].id]) {
-      this.flag = true;
-      this.issuesService.deleteIssue(this.issues[i].id).subscribe(() => {
-        delete this.issueIdIsChecked[this.issues[i].id];
-        this.issuesService.getIssues(this.issuesPerPage, this.currentPage);
-       }, () => {
-         this.isLoading = false;
-       });
-    }
-  }
-}
   if(!this.flag) {
     this.isLoading = false;
     alert("Please select at least 1 Issue.");

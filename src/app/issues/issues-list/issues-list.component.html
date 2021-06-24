@@ -125,9 +125,9 @@
   [pageSize]="issuesPerPage"
   [pageSizeOptions]="pageSizeOptions"
   (page)="onChangedPage($event)"
-  *ngIf="issues.length > 0"
+  *ngIf="totalIssues <= 0"
 >
 </mat-paginator>
-<p class="info-text mat-body-1" *ngIf="issues.length <= 0 && !isLoading">
+<p class="info-text mat-body-1" *ngIf="totalIssues <= 0 && !isLoading">
   No issues to display!
 </p>
