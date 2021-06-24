@@ -1,4 +1,10 @@
-<div class="container">
+<div class="lds-ring spin-center" *ngIf="isLoading">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="container" *ngIf="!isLoading">
   <br /><br /><br /><br />
   <div class="card-container">
     <div fxLayout="row wrap" fxLayoutGap="1px grid">

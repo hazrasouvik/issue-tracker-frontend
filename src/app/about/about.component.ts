@@ -15,9 +15,15 @@ export class AboutComponent implements OnInit {
 "When the list of issues are displayed, one issue can be selected to update at a time. The issue description, severity, status, created date and resolved date can be allowed to be updated",
 "When the list of issues are displayed, one or more issues can be selected to delete at a time",
 " Issue Analysis can be done for the Top Viewed Issues by clicking the Issue Analytics button on the Issues List page. Various Charts are provided to display the top viewed issues. The total number of Top Viewed Issues can be customized"
-]
+];
+isLoading: boolean = true;
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 2000);
+    }
 }

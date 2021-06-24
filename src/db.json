@@ -3,13 +3,13 @@
     {
       "id": "e93385d9-fe69-4e22-8584-c779fb5d3820",
       "description": "On clicking Delete, the application crashes.",
-      "severity": "Critical",
-      "status": "Open",
-      "createdDate": "2021-06-16T18:30:00.000Z",
-      "resolvedDate": "",
+      "severity": "Major",
+      "status": "Closed",
+      "createdDate": "2021-06-23T18:30:00.000Z",
+      "resolvedDate": "2021-06-24T19:05:07.997Z",
       "issueViewCount": 3,
       "creator": "Test user2",
-      "lastModifiedBy": "Souvik Hazra"
+      "lastModifiedBy": "Test user2"
     },
     {
       "id": "e93385d9-fe69-4e22-8584-c779fb5d3819",
@@ -43,28 +43,6 @@
       "issueViewCount": 5,
       "creator": "Test user2",
       "lastModifiedBy": "Test user2"
-    },
-    {
-      "id": "c5f7882d-c65d-4043-9a72-2c7097eb04d5",
-      "description": "Test Issue 1",
-      "severity": "Critical",
-      "status": "Open",
-      "createdDate": "2021-06-23T18:30:00.000Z",
-      "resolvedDate": "",
-      "issueViewCount": 0,
-      "creator": "Test user2",
-      "lastModifiedBy": ""
-    },
-    {
-      "id": "3072274f-4667-48cb-b51d-cf7dbded1934",
-      "description": "Test Issue 2",
-      "severity": "Minor",
-      "status": "In Progress",
-      "createdDate": "2021-06-23T18:30:00.000Z",
-      "resolvedDate": "",
-      "issueViewCount": 0,
-      "creator": "Souvik Hazra",
-      "lastModifiedBy": ""
     }
   ],
   "users": [
