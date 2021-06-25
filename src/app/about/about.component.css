@@ -6,6 +6,9 @@ div.container {
   text-align: left;
   margin: auto;
   padding: 1px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .card-container {
@@ -52,8 +55,12 @@ div.container {
 }
 
 @media screen and (max-width: 600px) {
-  div.container {
+  /*div.container {
     height: 2226px;
+  }*/
+
+  div.container {
+    height: 100%;
   }
 
   .card-container {
@@ -64,7 +71,7 @@ div.container {
   .info-text {
     width: 95%;
     margin: auto;
-    margin-top: 127rem;
+    margin-top: 125.7rem;
     margin-left: 1rem;
   }
 

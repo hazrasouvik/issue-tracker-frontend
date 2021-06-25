@@ -11,7 +11,7 @@ import { Issue } from './issue.model';
 @Injectable({ providedIn: 'root'})
 export class IssuesService {
 
-  private _issuesUrl = "http://localhost:3001/issues";
+  private _issuesUrl = "/api/issues";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'

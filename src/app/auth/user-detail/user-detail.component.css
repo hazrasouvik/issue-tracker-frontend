@@ -1,24 +1,28 @@
 mat-card {
   width: 30%;
-  background-color: white;
-  margin-top: 2.5rem;
+  background-color: rgba(36, 41, 46, 255);
+  margin-top: 2rem;
   height: 610px;
 }
 
 mat-card-header {
   display: flex;
-  justify-content: center;
-  background-color: rgba(36, 41, 46, 255);
+  justify-content: left;
   color: white;
+}
+
+.fa-user {
+  margin: 8px;
+  margin-right: 70px;
 }
 
 .main-div {
   display: flex;
   justify-content: center;
   align-items: left;
-  background-color: lightgray;
+  background-color: rgb(176, 173, 166);
   margin-top: 1.39rem;
-  height: 689px;
+  height: 344.5px;
 }
 
 mat-card-content {
@@ -27,11 +31,14 @@ mat-card-content {
 
 mat-card-content > p > span {
   font-weight: bold !important;
+  color: white;
+  font-size: 28px;
 }
 
 mat-card-content > p {
-  font-size: 35px;
+  font-size: 27px;
   font-weight: 420;
+  color: white;
 }
 
 .back-button {
@@ -42,13 +49,14 @@ mat-card-content > p {
 
 .mat-card-actions {
   margin-left: 2px;
-  margin-top: -9px;
+  margin-right: 10px;
+  margin-top: 15px;
 }
 
 .primary-color {
-  background-color: rgba(36, 41, 46, 255);
-  color: white;
-  font-size: 15px;
+  background-color: rgb(176, 173, 166);
+  color: rgba(36, 41, 46, 255);
+  font-size: 17px;
 }
 
 .warn-color {
@@ -65,20 +73,23 @@ mat-card-content > p {
 
 @media screen and (max-width: 600px) {
   .mat-card {
-    width: 90%;
+    width: 80%;
     height: 81vh;
   }
 
+  .fa-user {
+    margin-right: 40px;
+  }
+
   .main-div {
-    height: 661px;
+    height: 355px;
   }
 
   .mat-card-actions {
-    margin-top: -22px;
+    margin-top: 1px;
   }
 
   .back-button {
     height: 45px;
-    margin-top: -1rem;
   }
 }

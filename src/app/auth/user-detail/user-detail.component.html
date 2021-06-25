@@ -6,7 +6,10 @@
 </div>
 <div class="main-div" *ngIf="!isLoading">
   <mat-card class="mat-elevation-z4">
-    <mat-card-header><h1>Profile Details</h1></mat-card-header>
+    <mat-card-header
+      ><i mat-card-avatar class="fas fa-user fa-4x"></i>
+      <mat-card-title><h1>Profile Details</h1></mat-card-title></mat-card-header
+    >
     <mat-card-content>
       <div></div>
       <p><span>First Name: </span>{{ userDetails?.firstName | titlecase }}</p>

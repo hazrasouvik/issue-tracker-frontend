@@ -10,7 +10,7 @@ import { AuthData } from './auth-data.model';
 @Injectable({ providedIn: 'root'})
 export class AuthService {
 
-  private _usersUrl = "http://localhost:3001/users";
+  private _usersUrl = "/api/users";
   private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
