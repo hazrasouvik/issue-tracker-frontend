@@ -1,7 +1,8 @@
 mat-card {
   width: 30%;
   background-color: lightgray;
-  height: 500px;
+  margin-top: 2.5rem;
+  height: 610px;
 }
 
 mat-card-header {
@@ -15,7 +16,9 @@ mat-card-header {
   display: flex;
   justify-content: center;
   align-items: left;
-  margin-top: 2.5rem;
+  background-color: lightgray;
+  margin-top: 1.39rem;
+  height: 689px;
 }
 
 mat-card-content {
@@ -27,15 +30,19 @@ mat-card-content > p > span {
 }
 
 mat-card-content > p {
-  font-size: 22px;
+  font-size: 35px;
   font-weight: 420;
 }
 
 .back-button {
   width: fit-content;
-  margin-top: 1rem;
   font-size: 17px;
-  height: 60px;
+  height: 50px;
+}
+
+.mat-card-actions {
+  margin-left: 2px;
+  margin-top: -9px;
 }
 
 .primary-color {
@@ -60,6 +67,19 @@ mat-card-content > p {
   .mat-card {
     width: 90%;
     background-color: lightgray;
-    height: 70vh;
+    height: 81vh;
+  }
+
+  .main-div {
+    height: 661px;
+  }
+
+  .mat-card-actions {
+    margin-top: -22px;
+  }
+
+  .back-button {
+    height: 45px;
+    margin-top: -1rem;
   }
 }
