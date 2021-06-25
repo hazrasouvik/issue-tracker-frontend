@@ -14,7 +14,10 @@
       placeholder="Search from {{
         issuesDisplayedPerPage
       }} issue description..."
-    /><button mat-icon-button>
+    /><button
+      *ngIf="!descriptionFilter || descriptionFilter === ''"
+      mat-icon-button
+    >
       <i class="fas fa-search search-box search-box-button"></i>
     </button>
   </mat-form-field>
