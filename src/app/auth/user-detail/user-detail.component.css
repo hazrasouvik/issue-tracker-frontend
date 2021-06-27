@@ -62,7 +62,7 @@ mat-card-content > p {
 .warn-color {
   background-color: rgba(196, 49, 75, 255);
   color: white;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .fa-trash {
@@ -74,7 +74,8 @@ mat-card-content > p {
 @media screen and (max-width: 600px) {
   .mat-card {
     width: 80%;
-    height: 81vh;
+    height: 100vh;
+    margin-bottom: 1rem;
   }
 
   .fa-user {
@@ -86,10 +87,23 @@ mat-card-content > p {
   }
 
   .mat-card-actions {
-    margin-top: 1px;
+    margin-top: -10px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .mat-card-actions button {
+    width: fit-content;
+    margin-bottom: 1rem;
+    margin-left: 0rem;
+  }
+
+  .update-button {
+    margin-left: 10rem;
   }
 
   .back-button {
     height: 45px;
+    margin-top: -3rem;
   }
 }

@@ -57,6 +57,7 @@ button.mat-raised-button {
     height: 100%;
     justify-content: left;
   }
+
   .main-div {
     height: 100%;
   }
@@ -67,9 +68,24 @@ button.mat-raised-button {
 
   .customize-card {
     width: 90% !important;
-    height: 400px !important;
+    height: 100% !important;
   }
 
+  .customize-card-title {
+    color: rgba(36, 41, 46, 255);
+    font-weight: bolder;
+    font-size: larger;
+  }
+
+  .customize-card-info {
+    color: rgb(176, 173, 166);
+    font-weight: bold;
+    font-size: large;
+  }
+
+  .customize-card-content {
+    width: 100%;
+  }
   .mobile-hide {
     display: none !important;
   }

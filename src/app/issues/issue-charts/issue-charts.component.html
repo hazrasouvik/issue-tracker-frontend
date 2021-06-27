@@ -142,7 +142,7 @@
       <mat-card>
         <mat-card-title></mat-card-title>
         <ngx-charts-bar-vertical
-          [view]="[480, 520]"
+          [view]="[345, 470]"
           [results]="customIssuesChart"
           [scheme]="colorScheme"
           [xAxisLabel]="'Issues'"
@@ -162,7 +162,7 @@
         <ngx-charts-pie-chart
           [results]="customIssuesChart"
           [scheme]="colorScheme"
-          [view]="[480, 520]"
+          [view]="[345, 470]"
           [labels]="true"
         >
         </ngx-charts-pie-chart>
@@ -174,7 +174,7 @@
         <ngx-charts-advanced-pie-chart
           [results]="issuesChart"
           [scheme]="colorScheme"
-          [view]="[480, 520]"
+          [view]="[345, 470]"
           [gradient]="true"
         >
         </ngx-charts-advanced-pie-chart>
@@ -186,35 +186,48 @@
         <ngx-charts-pie-grid
           [results]="issuesChart"
           [scheme]="colorScheme"
-          [view]="[480, 520]"
+          [view]="[345, 470]"
         >
         </ngx-charts-pie-grid>
       </mat-card>
     </mat-tab>
     <mat-tab label="Customize">
       <mat-card class="mat-elevation-z4 customize-card">
-        <mat-card-header class="customize-card-header"
-          ><mat-card-title
-            ><p class="sub-title">
-              <i class="fas fa-user fa-sm"></i>
-              Customize Your Issue Analysis Dashboard
-            </p></mat-card-title
-          >
-          <mat-card-subtitle class="customize-card-sub-title"
-            ><p class="info-text mat-body-1 customize-card-info">
-              Here you can customize the total number of Top Viewed Issues you
-              want to analyse. Please select either from the dropdown options or
-              specify a custom number by yourself(The custom number has to be a
-              valid number to enable the Update button).
-            </p>
-            <p class="info-text mat-body-1 customize-card-info">
-              Also note that, this customization is for Bar Graph and Pie Chart.
-              The Advanced Pie Chart and Pie Grid will always show the stats
-              based on the total number of issues.
-            </p>
-          </mat-card-subtitle></mat-card-header
+        <!--<mat-card-title class="customize-card-title"
+          ><p class="sub-title">
+            <i class="fas fa-user fa-sm"></i>
+            Customize Your Issue Analysis Dashboard
+          </p></mat-card-title
         >
-        <mat-card-content>
+        <mat-card-subtitle class="customize-card-sub-title"
+          ><p class="info-text mat-body-1 customize-card-info">
+            Here you can customize the total number of Top Viewed Issues you
+            want to analyse. Please select either from the dropdown options or
+            specify a custom number by yourself(The custom number has to be a
+            valid number to enable the Update button).
+          </p>
+          <p class="info-text mat-body-1 customize-card-info">
+            Also note that, this customization is for Bar Graph and Pie Chart.
+            The Advanced Pie Chart and Pie Grid will always show the stats based
+            on the total number of issues.
+          </p>
+        </mat-card-subtitle>-->
+        <mat-card-content class="customize-card-content">
+          <p class="customize-card-title">
+            <i class="fas fa-user fa-sm"></i>
+            Customize Your Issue Analysis Dashboard
+          </p>
+          <p class="info-text mat-body-1 customize-card-info">
+            Here you can customize the total number of Top Viewed Issues you
+            want to analyse. Please select either from the dropdown options or
+            specify a custom number by yourself(The custom number has to be a
+            valid number to enable the Update button).
+          </p>
+          <p class="info-text mat-body-1 customize-card-info">
+            Also note that, this customization is for Bar Graph and Pie Chart.
+            The Advanced Pie Chart and Pie Grid will always show the stats based
+            on the total number of issues.
+          </p>
           <form
             #customizeForm="ngForm"
             (ngSubmit)="onSubmit(customizeForm.value)"
@@ -249,6 +262,7 @@
                 [disabled]="dropdownIssueInput.value"
               />
             </mat-form-field>
+            <br />
             <button
               mat-raised-button
               type="submit"

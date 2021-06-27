@@ -48,6 +48,7 @@ mat-card-content > p {
   .mat-card {
     width: 80%;
     background-color: lightgray;
-    height: 80vh;
+    height: 550px;
+    margin-bottom: 1rem;
   }
 }

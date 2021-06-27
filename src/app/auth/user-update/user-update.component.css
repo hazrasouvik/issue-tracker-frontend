@@ -76,6 +76,7 @@ button.mat-raised-button {
 
   .mat-card {
     width: 90%;
+    height: fit-content;
   }
 
   .mat-form-field.first-name {
