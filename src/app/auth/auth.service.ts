@@ -10,7 +10,8 @@ import { AuthData } from './auth-data.model';
 @Injectable({ providedIn: 'root'})
 export class AuthService {
 
-  private _usersUrl = "/api/users";
+ /* private _usersUrl = "/api/users";*/
+  private _usersUrl = "https://my-json-server.typicode.com/hazrasouvik/issue-tracker-json-server/users";
   private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'

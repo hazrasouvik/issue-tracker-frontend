@@ -11,7 +11,8 @@ import { Issue } from './issue.model';
 @Injectable({ providedIn: 'root'})
 export class IssuesService {
 
-  private _issuesUrl = "/api/issues";
+  /*private _issuesUrl = "/api/issues";*/
+  private _issuesUrl = "https://my-json-server.typicode.com/hazrasouvik/issue-tracker-json-server/issues";
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
