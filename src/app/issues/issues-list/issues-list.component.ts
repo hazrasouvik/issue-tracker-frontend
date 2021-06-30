@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageEvent } from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -31,8 +31,8 @@ currentPage = 1;
 pageSizeOptions = [1, 2, 5, 10];
 issuesDisplayedPerPage!: number;//As in the last page issuesPerPage maybe greater than actual issues diplayed.
 
-
 constructor(public issuesService: IssuesService, private router: Router, private authService: AuthService) {}
+
 
 ngOnInit() {
   console.log("Issues List NgOninit");
@@ -40,22 +40,36 @@ ngOnInit() {
   this.flag = false;
   this.issuesService.getIssues(this.issuesPerPage, this.currentPage);
   this.issuesSub = this.issuesService.getIssueUpdateListener().subscribe((issueData: {issues: Issue[], issueCount: number, loggedInUserCustomize: {} | null}) => {
-    this.isLoading=false;
     this.issues = issueData.issues;
-    this.issuesDisplayedPerPage = issueData.issueCount;
-    this.issuesService.getAllIssues()
-    .subscribe((issues: any) => {
-      this.totalIssues = issues.length;
-    });
-    this.userCustomization = issueData.loggedInUserCustomize;
-
     for(let i=0; i < issueData.issueCount; i++){
+      if(this.issues[i].lastModifiedBy && this.issues[i].lastModifiedBy!=="") {
+        this.authService.getUserDetails(this.issues[i].lastModifiedBy)
+      .subscribe((lastModifierDetails: any) => {
+        this.issues[i].lastModifiedBy = lastModifierDetails.firstName + " " + lastModifierDetails.lastName
+      })
+      }
+      this.authService.getUserDetails(this.issues[i].creator)
+      .subscribe((creatorDetails: any) => {
+        this.issues[i].creator = creatorDetails.firstName + " " + creatorDetails.lastName
+      })
+
       this.issueIdArr[i] = this.issues[i].id;
       this.isCheckedArr[i] = false;
       this.issueIdIsChecked[this.issues[i].id] = false;
     }
+    this.issuesService.getAllIssues()
+    .subscribe((allIssuesData) => {
+      this.totalIssues = allIssuesData.maxIssues;
+      this.isLoading = false
+    });
+    this.issuesDisplayedPerPage = issueData.issueCount;
+    this.userCustomization = issueData.loggedInUserCustomize;
 
-
+   /* for(let i=0; i < issueData.issueCount; i++){
+      this.issueIdArr[i] = this.issues[i].id;
+      this.isCheckedArr[i] = false;
+      this.issueIdIsChecked[this.issues[i].id] = false;
+    }*/
   });
   this.isLoggedIn = this.authService.getIsLoggedIn();
   this.userLoginListenerSub = this.authService.getUserLoginStatusListener().subscribe((userLoginData: {user: AuthData | null, loginStatus: boolean, validationErrors: boolean}) => {
@@ -64,7 +78,7 @@ ngOnInit() {
     this.userCustomization = userLoginData.user.customize;
     console.log(this.userCustomization);*/
   });
-}
+  }
 
 onChecked($event: any) {
 
@@ -73,22 +87,38 @@ onChecked($event: any) {
 deleteMultiple() {
   this.isLoading = true;
   this.flag = false;
+  var idsToDelete: string[] = [];
+  let j = 0;
+  //delete this.issueIdIsChecked[this.issues[i].id];
   if(this.isLoggedIn) {
   for(let i=0; i < this.issuesDisplayedPerPage; i++){
     if(this.issueIdIsChecked[this.issues[i].id]) {
       this.flag = true;
-      this.issuesService.deleteIssue(this.issues[i].id).subscribe(() => {
+      /*this.issuesService.deleteIssue(this.issues[i].id).subscribe(() => {
         delete this.issueIdIsChecked[this.issues[i].id];
         this.issuesService.getIssues(this.issuesPerPage, this.currentPage);
        }, () => {
          this.isLoading = false;
-       });
+       });*/
+       idsToDelete[j] = `"${this.issues[i].id}"`;
+       j++;
     }
   }
   if(!this.flag) {
     this.isLoading = false;
     alert("Please select at least 1 Issue.");
-  }}
+    return;
+  }
+
+  this.issuesService.deleteMultipleIssues(idsToDelete)
+  .subscribe((response) => {
+    idsToDelete.forEach((eachId) => delete this.issueIdIsChecked[eachId]);
+    this.issuesService.getIssues(this.issuesPerPage, this.currentPage);
+    console.log(response);
+  }, (error) => {
+    console.log(error);
+  })
+}
   else {
     this.isLoading = false;
     this.router.navigate(["/auth/login"]);

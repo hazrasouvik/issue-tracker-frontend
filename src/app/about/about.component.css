@@ -61,6 +61,12 @@ div.container {
 
   div.container {
     height: 100%;
+    margin-top: 21.59px !important;
+  }
+
+  .mat-card {
+    min-height: 270px;
+    height: fit-content;
   }
 
   .card-container {

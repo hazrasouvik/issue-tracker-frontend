@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
 
 
 import { AuthData } from './auth-data.model';
@@ -10,8 +9,9 @@ import { AuthData } from './auth-data.model';
 @Injectable({ providedIn: 'root'})
 export class AuthService {
 
- /* private _usersUrl = "/api/users";*/
-  private _usersUrl = "https://my-json-server.typicode.com/hazrasouvik/issue-tracker-json-server/users";
+ private _usersUrl = "/api/users";
+  private token!: string | null;
+  private tokenTimer: any;
   private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export class AuthService {
     };
   private isLoggedIn = false;
   private userLoginListener = new Subject<{ user: AuthData | null, loginStatus: boolean, validationErrors: boolean }>();
-  private loggedInUsersDetails!: AuthData;
+  private loggedInUsersDetails!: any;
   private userId!: string | null;
   loginCount: number = 0;
 
@@ -27,6 +27,10 @@ export class AuthService {
 
     getUserLoginStatusListener() {
       return this.userLoginListener.asObservable();
+    }
+
+    getToken() {
+      return this.token;
     }
 
     getIsLoggedIn () {
@@ -38,9 +42,8 @@ export class AuthService {
     }
 
     createUser(user: any) {
-      let id = uuidv4();
-      let newUser: AuthData = {
-        "id": id,
+      this.userLoginListener.next({user: null, loginStatus:false, validationErrors: false});
+      let newUser: any = {
         "email": user.email,
         "password": user.password,
         "firstName": user.firstName,
@@ -57,47 +60,61 @@ export class AuthService {
           "lastModifiedBy": true
         }
       }
-      this._http.get((this._usersUrl + "?email=" + user.email))
-      .subscribe((response: any) => {
-        if(response.length === 1) {
+        this._http.post(this._usersUrl + "/register", newUser, this.httpOptions)
+        .subscribe((response: any) => {
+            this.router.navigate(["/auth/login"]);
+            this.userLoginListener.next({user: response.result, loginStatus:false, validationErrors: false});
+            this.isLoggedIn = false;
+            console.log(response.message);
+        }, (error) => {
           this.router.navigate(["/auth/register"]);
           this.userLoginListener.next({user: null, loginStatus:false, validationErrors: true});
           this.isLoggedIn = false;
-          console.log("User already exists!")}
-        else if(response.length === 0) {
-        this._http.post(this._usersUrl, newUser, this.httpOptions)
-        .subscribe(() => {
-
-            this.router.navigate(["/auth/login"]);
-            this.userLoginListener.next({user: null, loginStatus:false, validationErrors: false});
-            this.isLoggedIn = false;
-            console.log("User Created!");
-
+          console.log(error.message);
         });
-        }
-      });
-    }
+      }
+
 
     login(userDetails: any) {
-      this._http.get((this._usersUrl + "?email=" + userDetails.email + "&password=" + userDetails.password))
+      this.userLoginListener.next({user: null, loginStatus:false, validationErrors: false});
+      this._http.post(this._usersUrl +"/login", userDetails, this.httpOptions)
       .subscribe((response: any) => {
-        if(response.length === 1) {
-          if(this.loginCount === 0)
-        this.router.navigate(["/issues"]);
-        this.loggedInUsersDetails = response[0];
-        this.userId = this.loggedInUsersDetails.id;
-        this.userLoginListener.next({user: this.loggedInUsersDetails, loginStatus:true, validationErrors: false});
-        this.isLoggedIn = true;
-        this.saveAuthData("true", this.userId);
-        console.log("Login success");
-    }
-        else if(response.length === 0) {
-          this.router.navigate(["/auth/login"]);
-          this.userLoginListener.next({user: null, loginStatus:false, validationErrors: true});
-          console.log("Invalid Login Credentials!");
-          this.isLoggedIn = false;
+        const token = response.token;
+        this.token = token;
+        if(token) {
+          const expiresInDuration = response.expiresIn;
+          this.userId = response.userId;
+          this.getUserDetails(response.userId)
+          .subscribe((usersDetails: any) => {
+            this.loggedInUsersDetails = userDetails;
+            this.setAuthTimer(expiresInDuration);
+            this.isLoggedIn = true;
+            const now = new Date();
+            const expirationDate = new Date(now.getTime() + (expiresInDuration * 1000));
+            this.saveAuthData(token, expirationDate, this.userId);
+            this.userLoginListener.next({user: usersDetails, loginStatus:true, validationErrors: false});
+            this.router.navigate(["/issues"]);
+            console.log("Login success");
+          }, (error) => {
+            console.log("Error fetching user details!" + error.message);
+            this.router.navigate(["/auth/login"]);
+            this.userLoginListener.next({user: null, loginStatus:false, validationErrors: true});
+            this.isLoggedIn = false;
+          });
         }
+      }, (error) => {
+        this.router.navigate(["/auth/login"]);
+          this.userLoginListener.next({user: null, loginStatus:false, validationErrors: true});
+          console.log(error.message);
+          this.isLoggedIn = false;
       });
+    }
+
+    private setAuthTimer(duration: number) {
+      console.log("Setting Timer:" + duration);
+      this.tokenTimer = setTimeout(() => {
+        this.logout();
+      }, duration * 1000);
     }
 
     getUserDetails(userId: string | null) {
@@ -110,48 +127,54 @@ export class AuthService {
     if(!authInformation){
       return;
     }
-    this.loginCount+=1;
+    const now = new Date();
+    const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
     console.log("Auto Auth user")
-      this.isLoggedIn = (authInformation.isLoggedIn === "true");
+    if (expiresIn > 0) {
+      this.token = authInformation.token;
+      this.isLoggedIn = true;
       this.userId = authInformation.userId;
-      this.getUserDetails(this.userId).subscribe((userDetails) => {
-        this.login(userDetails);
-      })
-
+      this.setAuthTimer(expiresIn / 1000);
+      if(this.getIsLoggedIn()) {
+      this.getUserDetails(this.userId)
+          .subscribe((usersDetails: any) => {
+            this.userLoginListener.next({user: usersDetails, loginStatus:true, validationErrors: false});
+            this.loggedInUsersDetails = usersDetails;
+          });
+        }
+    }
   }
 
     logout() {
+      this.token = null;
+      this.isLoggedIn = false;
       this.userLoginListener.next({user: null, loginStatus: false, validationErrors: false});
       console.log("Logged out");
-      this.loginCount = 0;
+      clearTimeout(this.tokenTimer);
       this.userId = null;
       this.clearAuthData();
-      this.isLoggedIn = false;
       this.router.navigate(["/auth/login"]);
     }
 
     updateUser(user: any) {
-      this._http.get((this._usersUrl + "?email=" + user.email))
-      .subscribe((response: any) => {
-        if(response.length === 1) {
-          this.isLoggedIn = true;
-          this.userLoginListener.next({user: this.loggedInUsersDetails, loginStatus:true, validationErrors: true});
-          console.log("Another user with the same email already exists!")
-        }
-        else if(response.length === 0) {
           this._http.patch(this._usersUrl + '/' + user.id, user, this.httpOptions)
           .subscribe(() => {
             this.router.navigate(["/auth/user/" + user.id]);
+          }, (error) => {
+            this.isLoggedIn = true;
+            this.getUserDetails(user.id)
+            .subscribe((usersDetails: any) => {
+              this.userLoginListener.next({user: usersDetails, loginStatus:true, validationErrors: true});
+              this.loggedInUsersDetails = usersDetails;
+            });
+            console.log(error.message)
           });
-        }
-      });
     }
 
     customizeUser(user: any) {
       this._http.patch(this._usersUrl + '/' + user.id, user, this.httpOptions)
       .subscribe(() => {
         console.log("Customize success");
-        this.userLoginListener.next({user: this.loggedInUsersDetails, loginStatus:true, validationErrors: false});
         this.router.navigate(["/issues"]);
       });
     }
@@ -163,25 +186,29 @@ export class AuthService {
       });
     }
 
-
-  private saveAuthData(isLoggedIn: string, userId: string) {
-    localStorage.setItem('isLoggedIn', isLoggedIn);
+  private saveAuthData(token: string, expirationDate: Date, userId: string | null) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('expiration', expirationDate.toISOString());
+    if(userId)
     localStorage.setItem('userId', userId);
   }
 
   private clearAuthData(){
-    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
+    localStorage.removeItem("expiration");
     localStorage.removeItem("userId");
   }
 
   private getAuthData() {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const token = localStorage.getItem("token");
+    const expirationDate = localStorage.getItem("expiration");
     const userId = localStorage.getItem("userId");
-    if(!isLoggedIn) {
+    if(!token || !expirationDate) {
       return;
     }
     return {
-      isLoggedIn: isLoggedIn,
+      token: token,
+      expirationDate: new Date(expirationDate),
       userId: userId
     }
   }

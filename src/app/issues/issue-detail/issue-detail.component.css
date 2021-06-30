@@ -10,10 +10,17 @@ mat-card {
 }
 
 mat-card-header {
-  display: flex;
-  justify-content: center;
   background-color: rgba(36, 41, 46, 255);
   color: white;
+  height: 12%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mat-card-header > h1 {
+  margin: auto;
+  width: 47%;
 }
 
 .main-div {
@@ -48,7 +55,12 @@ mat-card-content > p {
   .mat-card {
     width: 80%;
     background-color: lightgray;
-    height: 550px;
+    height: fit-content;
     margin-bottom: 1rem;
+  }
+
+  .mat-card-header > h1 {
+    margin: auto;
+    width: 70%;
   }
 }

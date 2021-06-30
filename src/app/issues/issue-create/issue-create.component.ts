@@ -38,10 +38,10 @@ export class IssueCreateComponent implements OnInit {
         this.issuesService.getIssue(this.issueId).subscribe((issueData: any) => {
           this.isLoading = false;
           if(issueData.resolvedDate !== "") {
-          this.issue = {id: issueData.id, description: issueData.description, severity: issueData.severity, status: issueData.status, createdDate: new Date(issueData.createdDate), resolvedDate: new Date(issueData.resolvedDate)};
+          this.issue = {id: this.issueId, description: issueData.description, severity: issueData.severity, status: issueData.status, createdDate: new Date(issueData.createdDate), resolvedDate: new Date(issueData.resolvedDate)};
           }
           else {
-            this.issue = {id: issueData.id, description: issueData.description, severity: issueData.severity, status: issueData.status, createdDate: new Date(issueData.createdDate), resolvedDate: new Date()};
+            this.issue = {id: this.issueId, description: issueData.description, severity: issueData.severity, status: issueData.status, createdDate: new Date(issueData.createdDate), resolvedDate: new Date()};
           }
         this.loggedInUserId = this.authService.getloggedInUserId();
           this.authService.getUserDetails(this.loggedInUserId)
@@ -73,8 +73,7 @@ export class IssueCreateComponent implements OnInit {
         "severity": formValue.severity,
         "status": formValue.status,
         "createdDate": formValue.createdDate,
-        "resolvedDate": formValue.resolvedDate,
-        "creator": this.creator
+        "resolvedDate": formValue.resolvedDate
       }
       this.issuesService.addIssue(newIssue);
      } else {
@@ -85,7 +84,7 @@ export class IssueCreateComponent implements OnInit {
         "status": formValue.status,
         "createdDate": formValue.createdDate,
         "resolvedDate": formValue.resolvedDate,
-        "lastModifiedBy": this.lastModifiedBy
+        "lastModifiedBy": this.loggedInUserId
        }
        this.issuesService.updateIssue(updatedIssue);
      }}
@@ -96,8 +95,7 @@ export class IssueCreateComponent implements OnInit {
           "severity": formValue.severity,
           "status": formValue.status,
           "createdDate": formValue.createdDate,
-          "resolvedDate": "",
-          "creator": this.creator
+          "resolvedDate": ""
         }
         this.issuesService.addIssue(newIssue);
        } else {
@@ -108,7 +106,7 @@ export class IssueCreateComponent implements OnInit {
           "status": formValue.status,
           "createdDate": formValue.createdDate,
           "resolvedDate": "",
-          "lastModifiedBy": this.lastModifiedBy
+          "lastModifiedBy": this.loggedInUserId
          }
          this.issuesService.updateIssue(updatedIssue);
          this.addIssueForm.reset();

@@ -9,7 +9,7 @@ import { AuthGuard } from "../auth/auth-guard.service";
 import { IssueCreateDeactivateGuard } from "./issue-create-deactivate-guard.service";
 
 const issueRoutes: Routes = [
-    { path: '', component: IssuesListComponent },
+    { path: '', component: IssuesListComponent},
     { path: 'add', component: IssueCreateComponent, canActivate: [AuthGuard], canDeactivate: [IssueCreateDeactivateGuard] },
     { path: 'edit/:issueId', component: IssueCreateComponent, canActivate: [AuthGuard] },
     { path: ':issueId', component: IssuesDetailComponent, canActivate: [AuthGuard] },

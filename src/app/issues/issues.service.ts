@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { v4 as uuidv4 } from 'uuid';
+import { map } from 'rxjs/operators';
 import { AuthData } from '../auth/auth-data.model';
 import { AuthService } from '../auth/auth.service';
 
@@ -11,8 +11,8 @@ import { Issue } from './issue.model';
 @Injectable({ providedIn: 'root'})
 export class IssuesService {
 
-  /*private _issuesUrl = "/api/issues";*/
-  private _issuesUrl = "https://my-json-server.typicode.com/hazrasouvik/issue-tracker-json-server/issues";
+  private _issuesUrl = "/api/issues";
+  /*private _issuesUrl = "https://my-json-server.typicode.com/hazrasouvik/issue-tracker-json-server/issues";*/
     private httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json'
@@ -27,24 +27,53 @@ export class IssuesService {
     constructor(private _http: HttpClient, private router: Router, private authService: AuthService){}
 
     getAllIssues() {
-      return this._http.get<Issue[]>(this._issuesUrl);
+      return this._http.get<any>(this._issuesUrl);
     }
 
-    //http://localhost:3001/issues?_page=1&_limit=20
     getIssues(issuesPerPage: number, currentPage: number){
         if(this.authService.getIsLoggedIn()) {
           this.authService.getUserDetails(this.authService.getloggedInUserId())
           .subscribe((userDetails: any) => {
-        this._http.get<Issue[]>(this._issuesUrl + "?_page=" + currentPage + "&_limit=" + issuesPerPage)
-        .subscribe((issues: any) => {
-          this.issues = issues,
+        this._http.get<{message: string, issues: any, maxIssues: number}>(this._issuesUrl + "?_page=" + currentPage + "&_limit=" + issuesPerPage)
+        .pipe(map((issueData) => {
+          return { issues: issueData.issues.map((issue: any) => {
+              return {
+                id: issue._id,
+                description: issue.description,
+                severity: issue.severity,
+                status: issue.status,
+                createdDate: issue.createdDate,
+                resolvedDate: issue.resolvedDate,
+                issueViewCount: issue.issueViewCount,
+                creator: issue.creator,
+                lastModifiedBy: issue.lastModifiedBy
+              };
+          }), maxIssues: issueData.maxIssues};
+        }))
+        .subscribe((transformedIssueData: any) => {
+          this.issues = transformedIssueData.issues,
           this.issuesUpdated.next({issues: [...this.issues], issueCount: this.issues.length, loggedInUserCustomize: userDetails.customize});
         });
           });
-        } else {
-          this._http.get<Issue[]>(this._issuesUrl + "?_page=" + currentPage + "&_limit=" + issuesPerPage)
-        .subscribe((issues: any) => {
-          this.issues = issues,
+        } else if(!this.authService.getIsLoggedIn()) {
+          this._http.get<{message: string, issues: any, maxIssues: number}>(this._issuesUrl + "?_page=" + currentPage + "&_limit=" + issuesPerPage)
+          .pipe(map((issueData) => {
+            return { issues: issueData.issues.map((issue: any) => {
+              return {
+                id: issue._id,
+                description: issue.description,
+                severity: issue.severity,
+                status: issue.status,
+                createdDate: issue.createdDate,
+                resolvedDate: issue.resolvedDate,
+                issueViewCount: issue.issueViewCount,
+                creator: issue.creator,
+                lastModifiedBy: issue.lastModifiedBy
+              };
+            }), maxIssues: issueData.maxIssues};
+          }))
+        .subscribe((transformedIssueData: any) => {
+          this.issues = transformedIssueData.issues,
           this.issuesUpdated.next({issues: [...this.issues], issueCount: this.issues.length, loggedInUserCustomize: null});
         });
         }
@@ -55,11 +84,10 @@ export class IssuesService {
       return this._http.get(this._issuesUrl + "/" + issueId);
     }
 
-    //http://localhost:3001/issues?_sort=issueViewCount&_order=desc
     getTopViewedSortedIssues(customIssues: any) {
       this._http.get<Issue[]>(this._issuesUrl + "?_sort=issueViewCount&_order=desc")
-        .subscribe((issues: any) => {
-          this.topViewedIssues = issues,
+        .subscribe((issueData: any) => {
+          this.topViewedIssues = issueData.issues,
           this.topViewedIssuesUpdated.next({issues: [...this.topViewedIssues], issueCount: this.topViewedIssues.length, customIssues: customIssues});
           });
     }
@@ -73,18 +101,14 @@ export class IssuesService {
     }
 
     addIssue(issue: any){
-      let id = uuidv4();
       let issueViewCount = 0;
-      let newIssue: Issue = {
-          "id": id,
+      let newIssue: any = {
           "description": issue.description,
           "severity": issue.severity,
           "status": issue.status,
           "createdDate": issue.createdDate,
           "resolvedDate": issue.resolvedDate,
-          "issueViewCount": issueViewCount,
-          "creator": issue.creator,
-          "lastModifiedBy": ""
+          "issueViewCount": issueViewCount
       }
       this._http.post(this._issuesUrl, newIssue, this.httpOptions)
       .subscribe(() => {
@@ -105,6 +129,11 @@ export class IssuesService {
         console.log("Issue Count update success");
       });
     }
+
+
+  deleteMultipleIssues(issueIds: string[]) {
+    return this._http.delete(this._issuesUrl + "/deleteMultiple?ids=[" + issueIds + "]");
+  }
 
   deleteIssue(issueId: string){
     return this._http.delete(this._issuesUrl + "/" + issueId);

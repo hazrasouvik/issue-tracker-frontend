@@ -15,12 +15,14 @@ export class HeaderComponent implements OnInit, OnDestroy{
   flag: boolean = false;
   private userLoginListenerSub!: Subscription;
   isLoggedIn!: boolean;
-  userId?: string;
+  userId?: string | null;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.flag = false;
+    this.isLoggedIn = this.authService.getIsLoggedIn();
+    this.userId = this.authService.getloggedInUserId();
     this.userLoginListenerSub = this.authService.getUserLoginStatusListener().subscribe((userLoginData: {user: AuthData | null, loginStatus: boolean, validationErrors: boolean}) => {
       this.isLoggedIn = userLoginData.loginStatus;
       this.userId = userLoginData.user?.id;
@@ -28,7 +30,6 @@ export class HeaderComponent implements OnInit, OnDestroy{
   }
 
   logout() {
-    this.isLoggedIn = false;
     this.authService.logout();
   }
 
