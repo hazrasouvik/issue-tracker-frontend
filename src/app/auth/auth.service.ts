@@ -9,7 +9,7 @@ import { AuthData } from './auth-data.model';
 @Injectable({ providedIn: 'root'})
 export class AuthService {
 
- private _usersUrl = "https://issue-tracker-backend1.herokuapp.com/api/users";
+ private _usersUrl = "/api/users";
   private token!: string | null;
   private tokenTimer: any;
   private httpOptions = {
