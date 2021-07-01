@@ -100,6 +100,7 @@ mat-card-content > p {
 
   .update-button {
     margin-left: 10rem;
+    margin-right: 5px;
   }
 
   .back-button {
